@@ -9,7 +9,7 @@
 #' @param atlas atlas template to spatially register the T1-w scans. By default the MNI152 atlas template is used.
 #' @param mask brain mask of the atlas template to performed the skull stripping.
 #' @param inhomogeneity inhomogeneity correction algorithm to be applied. The correction by default is the 'N4' bias correction.
-#' @param trasnformation non-linear transformation for registering the T1-w MRI scan to the reference template. 'SyN' is used by default.
+#' @param trasnformation non-linear transformation for registering the T1-w MRI scan to the reference template. 'SyN' transformation is used by default.
 #' @return paths of preprocessed MRI scans.
 #' @export
 preprocess_modality_t1 <- function(mri_patient, folder_patient, atlas, mask, inhomogeneity = "N4", transformation = "SyN"){
