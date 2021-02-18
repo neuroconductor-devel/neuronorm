@@ -25,7 +25,8 @@ For the template space, the MNI152 atlas with a isomorfic voxel size of 1mm is u
 
 ### Data extructure
 
-For using `NeuroNorm`, data must follow a specific structure. This makes easier and more intuitive the loading of input MRI scans and organization of output MRI files. MRI images must be in `NiFTI` format. Currently, `NeuroNorm` only supports T1-w sequence scans. However, other modalities will be implemented in future versions. It is recommended to store your data in the following structure:
+For using `NeuroNorm`, data must follow a specific structure. This makes easier and more intuitive the loading of input MRI scans and organization of output MRI files. MRI images must be in `NiFTI` format. 
+Currently, `NeuroNorm` only supports T1-w sequence scans. However, other modalities will be implemented in future versions. It is recommended to store your data in the following structure:
 
 ```r
 ├── General_folder              # main folder
@@ -44,6 +45,18 @@ For using `NeuroNorm`, data must follow a specific structure. This makes easier 
 ```
 
 ### NeuroNorm preprocessing
+
+After the acquisition of an MRI scan, due to the nature of its data, it needs to be processed before any statistical analysis, especially if the study involves multiple sources, multiple scans, and/or multiple subjects. The collection of transformations from the data is called imaging preprocessing. There are numerous steps in imaging preprocessing commonly used to reduce noise, adjust and standardize the data. The steps' order and relevance depend on the study aim and the neurologist criteria. 
+
+The `NeuroNorm` package presents a preprocessing pipeline to transform raw images to images ready for any satistical analysis. First, the `NeuroNorm` package performs inhomogeneity correction using the N4 correction. Then it applies a non-linear registration to the MNI152 template using diffeomorphism algorithm. It also only extracts the brain tissue using a brain mask derivated from the MNI atlas. The brain extraction is followed by a brain segmentation using Hidden Markov Random Fields (HMRF). The segmented image is considered as a spatially informed scan given the HMRF model properties. A control voxel mask image is obtained for applying the RAVEL intensity normalization. Finally, the intensities are normalized by using the RAVEL algorithm.
+
+Note: the methods and algorithms selected of `NeuroNorm` are mainstay in literature of brain imaging of neurodegenerative disorsers. `NeuroNorm` proposes a staightforward and simple preprocessing pipeline for integrating images from numerous neurodegenrative processes.
+
+
+
+#### Loading data
+
+
 
 ### Preprocessed images
 
