@@ -7,9 +7,9 @@
 preprocess_patients(patients.folder, clinical.covariates)
 }
 \arguments{
-\item{patients.folder}{general folder containing folders per patient with raw T1-w images.}
+\item{clinical.covariates}{data.frame of covariates associated to the MRI scans. Number of rows should be equal to the number of images.}
 
-\item{clinical.covariates}{table of covariates associated to the MRI scans. Number of rows should be equal to the number of images.}
+\item{patients.general}{folder containing folders per patient with raw T1-w images.}
 }
 \value{
 paths of preprocessed MRI scans.

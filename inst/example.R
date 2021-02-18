@@ -15,7 +15,6 @@ clinical_info <- read.csv(file = covariates, sep = ';')
 # Brain extraction, Spatial informed MRI scan , a.k.a., brain segmentation and RAVEL intensity normalization.
 paths_preprocess_patients <- preprocess_patients(folder, clinical_info)
 
-
 # Outputs paths of the preprocessed MRI scans.
 paths_preprocess_patients
 

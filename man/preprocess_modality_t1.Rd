@@ -24,7 +24,7 @@ preprocess_modality_t1(
 
 \item{inhomogeneity}{inhomogeneity correction algorithm to be applied. The correction by default is the 'N4' bias correction.}
 
-\item{trasnformation}{non-linear transformation for registering the T1-w MRI scan to the reference template. 'SyN' transformation is used by default.}
+\item{transformation}{non-linear transformation for registering the T1-w MRI scan to the reference template. 'SyN' transformation is used by default.}
 }
 \value{
 paths of preprocessed MRI scans.
