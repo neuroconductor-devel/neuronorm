@@ -5,6 +5,8 @@ NeuroNorm is an R package that to preprocess structural magnetic resonance imagi
 
 This package is an extension of the master thesis **Detection and Classification of Neurodegenerative Diseases: A Spatially Informed Bayesian neural Network** which conducts a population-level analysis of neurodegenerative patients.
 
+##### Installation
+
 You can install NeuroNorm from github using `devtools`.
 
 ``` r
