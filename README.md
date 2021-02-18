@@ -1,5 +1,5 @@
 
-# NeuroNorm <img src="neuro_sticker.png" align="right" width="160" />
+# NeuroNorm <img src="img/neuro_sticker.png" align="right" width="160" />
 
 NeuroNorm is an R package that to preprocess structural magnetic resonance imaging (MRI) from multiple patients, diseases, scanners and sites. NeuroNorm transformed multiple raw T1-w images in the NIfTI format into preprocessed images comparable across patients, sites and diseases. Neuronorm performs inhomogeneity correction, spatial registration to a template, skull stripping, spatially informed MRI scan (brain segmentation) generation , intensity normalization and intensity adjustment. NeuroNorm comes up as a standard procedure to compare and analyze multiple T1-w scans of different neurodegenerative diseases. 
 
@@ -76,10 +76,10 @@ clinical_info <- read.csv(file = covariates, sep = ';')
 
 The function `preprocess_patients` takes as input the folder containing the raw images and the covariates variable, applies the preprocessing pipeline to the input images, and creates preprocessed images for each process.
 
-| Parameter            | Description                                                                                                                               | Default |
-| ---------------------| ----------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `patients.folder`    | `folder` containing folders per patient with raw T1-w images.                                                                             |         |
-| `clinical.covariates`| `data.frame` of covariates associated to the MRI scans. Number of rows should be equal to the number of images.                           | `NULL`  |
+| Parameter            | Description                                                                                                                               |
+| ---------------------| ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `patients.folder`    | `folder` containing folders per patient with raw T1-w images.                                                                             |
+| `clinical.covariates`| `data.frame` of covariates associated to the MRI scans. Number of rows should be equal to the number of images.                           |
 
 
 The main purpose of the function `preprocess_patients` is to create preprocessed images just by having the raw images and some covariates of interest.
@@ -91,5 +91,23 @@ paths_preprocess_patients <- preprocess_patients(folder, clinical_info)
 ```
 
 ### Preprocessed images
+
+After executing the `preprocess_patients`, a `list` of paths is created. The list containes the relatives paths to each of the preprocessed images organized by patient folder.
+
+```r
+
+library('oro.nifti')
+
+img <- readNIfTI(file.path(paths_preprocess_patients$patient01$ravel))
+orthographic(img)
+
+```
+To visualize the image, the `orthographic` function from the `oro.nifti` package is used. The image corresponds to a fully preprocessed MRI scan ready to use in further anlysis.
+
+<p align="center">
+
+<img src="img/preprocessing_neuronorm.jpg" width="600"/>
+
+</p
 
 ## References
