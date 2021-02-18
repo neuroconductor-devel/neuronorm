@@ -1,7 +1,7 @@
 #' Preprocess T1-w MRI scan for one patient
 #'
 #' This function preprocesses a raw T1-w MRI scan and generates a spatially informed MRI data using the fast algorithm.'
-#' The preprocesising steps comprises imhomogeneity correction 'N4', registration to the MNI152 template with voxel size of 2mm
+#' The preprocesising steps comprises imhomogeneity correction 'N4', registration to the MNI152 template with isotropic voxel size of 2mm
 #' using the 'SyN' transformation, skull stripping, and RAVEL intensity normalization.
 #'
 #' @param mri_patient path of the T1-w scan.
@@ -62,7 +62,17 @@ preprocess_modality_t1 <- function(mri_patient, folder_patient, atlas, mask, inh
   return(mri_paths)
 }
 
-
+#' Wrapper function for RAVEL normalization in T1-w images
+#'
+#' Ravel intensity normalization including control voxels and clinical covariates.'
+#' @param masked_paths list or vector of paths of the input NIfTI images to be normalized.
+#' @param csf_paths NIfTI image paths for the binary control region masks.
+#' @param ravel_paths list or vector of paths of the output NIfTI images.
+#' @param demographics table of covariates associated to the MRI scans. Number of rows should be equal to the number of images.
+#' @param brain_mask NIfTI image path for the binary brain mask. Must have value 1 for the brain and 0 otherwise.
+#' @param patients_folder folder to save the output control mask.
+#' @return RAVEL-corrected images are saved in disk.
+#' @export
 ### Ravel Normalization
 image_normalization_ravel <- function(masked_paths, csf_paths, ravel_paths, demographics, brain_mask, patients_folder){
 
