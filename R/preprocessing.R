@@ -9,8 +9,12 @@
 #' @param atlas atlas template to spatially register the T1-w scans. By default the MNI152 atlas template is used.
 #' @param mask brain mask of the atlas template to performed the skull stripping.
 #' @param inhomogeneity inhomogeneity correction algorithm to be applied. The correction by default is the 'N4' bias correction.
-#' @param trasnformation non-linear transformation for registering the T1-w MRI scan to the reference template. 'SyN' transformation is used by default.
+#' @param transformation non-linear transformation for registering the T1-w MRI scan to the reference template. 'SyN' transformation is used by default.
 #' @return paths of preprocessed MRI scans.
+#' @importFrom extrantsr bias_correct ants_regwrite
+#' @importFrom neurobase mask_img
+#' @importFrom fslr fast
+#' @importFrom oro.nifti writeNIfTI
 #' @export
 preprocess_modality_t1 <- function(mri.patient, folder.patient, atlas, mask, inhomogeneity = "N4", transformation = "SyN"){
 
@@ -97,11 +101,10 @@ image_normalization_ravel <- function(masked.paths, csf.paths, ravel.paths, demo
 #' The preprocesising steps comprises imhomogeneity correction 'N4', registration to the MNI152 template with isotropic voxel size of 2mm
 #' using the 'SyN' transformation, skull stripping, and RAVEL intensity normalization.
 #'
-#' @param patients.folder general folder containing folders per patient with raw T1-w images.
-#' @param clinical.covariates table of covariates associated to the MRI scans. Number of rows should be equal to the number of images.
+#' @param patients.general folder containing folders per patient with raw T1-w images.
+#' @param clinical.covariates data.frame of covariates associated to the MRI scans. Number of rows should be equal to the number of images.
 #' @return paths of preprocessed MRI scans.
 #' @importFrom MNITemplate getMNIPath readMNI
-#' @importFrom WhiteStripe whitestripe whitestripe_norm
 #' @export
 preprocess_patients <- function(patients.folder, clinical.covariates){
 

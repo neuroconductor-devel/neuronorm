@@ -74,6 +74,21 @@ clinical_info <- read.csv(file = covariates, sep = ';')
 
 ### Preprocessing 
 
+The function `preprocess_patients` takes as input the folder containing the raw images and the covariates variable, applies the preprocessing pipeline to the input images, and creates preprocessed images for each process.
+
+| Parameter            | Description                                                                                                                               | Default |
+| ---------------------| ----------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `patients.folder`    | `folder` containing folders per patient with raw T1-w images.                                                                             |         |
+| `clinical.covariates`| `data.frame` of covariates associated to the MRI scans. Number of rows should be equal to the number of images.                           | `NULL`  |
+
+
+The main purpose of the function `preprocess_patients` is to create preprocessed images just by having the raw images and some covariates of interest.
+
+```r
+
+paths_preprocess_patients <- preprocess_patients(folder, clinical_info)
+
+```
 
 ### Preprocessed images
 
