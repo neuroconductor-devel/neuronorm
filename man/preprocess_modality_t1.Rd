@@ -5,8 +5,8 @@
 \title{Preprocess T1-w MRI scan for one patient}
 \usage{
 preprocess_modality_t1(
-  mri_patient,
-  folder_patient,
+  mri.patient,
+  folder.patient,
   atlas,
   mask,
   inhomogeneity = "N4",
@@ -14,9 +14,9 @@ preprocess_modality_t1(
 )
 }
 \arguments{
-\item{mri_patient}{path of the T1-w scan.}
+\item{mri.patient}{path of the T1-w scan.}
 
-\item{folder_patient}{folder containing the T1-w scan. This folder usually refers as the patient.}
+\item{folder.patient}{folder containing the T1-w scan. This folder usually refers as the patient.}
 
 \item{atlas}{atlas template to spatially register the T1-w scans. By default the MNI152 atlas template is used.}
 

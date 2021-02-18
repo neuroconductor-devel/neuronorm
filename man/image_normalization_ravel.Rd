@@ -5,26 +5,26 @@
 \title{Wrapper function for RAVEL normalization in T1-w images}
 \usage{
 image_normalization_ravel(
-  masked_paths,
-  csf_paths,
-  ravel_paths,
+  masked.paths,
+  csf.paths,
+  ravel.paths,
   demographics,
-  brain_mask,
-  patients_folder
+  brain.mask,
+  patients.folder
 )
 }
 \arguments{
-\item{masked_paths}{list or vector of paths of the input NIfTI images to be normalized.}
+\item{masked.paths}{list or vector of paths of the input NIfTI images to be normalized.}
 
-\item{csf_paths}{NIfTI image paths for the binary control region masks.}
+\item{csf.paths}{NIfTI image paths for the binary control region masks.}
 
-\item{ravel_paths}{list or vector of paths of the output NIfTI images.}
+\item{ravel.paths}{list or vector of paths of the output NIfTI images.}
 
 \item{demographics}{table of covariates associated to the MRI scans. Number of rows should be equal to the number of images.}
 
-\item{brain_mask}{NIfTI image path for the binary brain mask. Must have value 1 for the brain and 0 otherwise.}
+\item{patients.folder}{folder to save the output control mask.}
 
-\item{patients_folder}{folder to save the output control mask.}
+\item{brain_mask}{NIfTI image path for the binary brain mask. Must have value 1 for the brain and 0 otherwise.}
 }
 \value{
 RAVEL-corrected images are saved in disk.

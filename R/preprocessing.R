@@ -4,36 +4,36 @@
 #' The preprocesising steps comprises imhomogeneity correction 'N4', registration to the MNI152 template with isotropic voxel size of 2mm
 #' using the 'SyN' transformation, and skull stripping.
 #'
-#' @param mri_patient path of the T1-w scan.
-#' @param folder_patient folder containing the T1-w scan. This folder usually refers as the patient.
+#' @param mri.patient path of the T1-w scan.
+#' @param folder.patient folder containing the T1-w scan. This folder usually refers as the patient.
 #' @param atlas atlas template to spatially register the T1-w scans. By default the MNI152 atlas template is used.
 #' @param mask brain mask of the atlas template to performed the skull stripping.
 #' @param inhomogeneity inhomogeneity correction algorithm to be applied. The correction by default is the 'N4' bias correction.
 #' @param trasnformation non-linear transformation for registering the T1-w MRI scan to the reference template. 'SyN' transformation is used by default.
 #' @return paths of preprocessed MRI scans.
 #' @export
-preprocess_modality_t1 <- function(mri_patient, folder_patient, atlas, mask, inhomogeneity = "N4", transformation = "SyN"){
+preprocess_modality_t1 <- function(mri.patient, folder.patient, atlas, mask, inhomogeneity = "N4", transformation = "SyN"){
 
   # empty list to save paths
   mri_paths <- list()
 
   # Inhomogeneity Correction: N4
   cat(paste0('*********************************************\n****** Inhomogeneity Correction: ', inhomogeneity ,' *********\n*********************************************\n--Running...\n'))
-  bias_file <- file.path(folder_patient, 'T1_bias.nii.gz')
-  bias_mri <- extrantsr::bias_correct(mri_patient, correction = inhomogeneity, outfile = bias_file, verbose = FALSE)
+  bias_file <- file.path(folder.patient, 'T1_bias.nii.gz')
+  bias_mri <- extrantsr::bias_correct(mri.patient, correction = inhomogeneity, outfile = bias_file, verbose = FALSE)
   mri_paths[['bias']] <- bias_file
   cat('--Complete.\n')
 
   # Registration to Template (SyN: Non-linear)
   cat(paste0('*********************************************\n******* Spatial Registration : ',transformation , ' **********\n*********************************************\n--Running...\n'))
-  syn_file <-file.path(folder_patient, 'T1_SyN.nii.gz')
+  syn_file <-file.path(folder.patient, 'T1_SyN.nii.gz')
   syn_mri <- extrantsr::ants_regwrite(filename = bias_mri, outfile = syn_file, template.file = atlas, typeofTransform = transformation, verbose = FALSE)
   mri_paths[['syn']] <- syn_file
   cat('--Complete.\n')
 
   # Brain Mask
   cat('*********************************************\n*************** Brain Mask ******************\n*********************************************\n--Running...\n')
-  mask_file <- file.path(folder_patient, 'T1_masked_SyN')
+  mask_file <- file.path(folder.patient, 'T1_masked_SyN')
   mask_mri = neurobase::mask_img(syn_file, mask)
   oro.nifti::writeNIfTI(mask_mri, mask_file)
   mri_paths[['syn_masked']] <- paste0(mask_file,'.nii.gz')
@@ -41,7 +41,7 @@ preprocess_modality_t1 <- function(mri_patient, folder_patient, atlas, mask, inh
 
   # Spatially Informed layer
   cat('*********************************************\n******** Spatially Informed Layer ***********\n*********************************************\n--Running...\n')
-  spatial_file <- file.path(folder_patient, 'T1_spatially_informed.nii.gz')
+  spatial_file <- file.path(folder.patient, 'T1_spatially_informed.nii.gz')
   spatial_mri = fslr::fast(file = mask_mri, outfile = spatial_file, opts = "--nobias", verbose = FALSE)
   mri_paths[['spatial']] <- spatial_file
   cat('--Complete.\n')
@@ -50,13 +50,13 @@ preprocess_modality_t1 <- function(mri_patient, folder_patient, atlas, mask, inh
   cat('*********************************************\n********* CSF Tissue Mask (RAVEL) ***********\n*********************************************\n--Running...\n')
   tissue_mask <- spatial_mri
   tissue_mask[tissue_mask != 1] <- 0
-  tissue_mask_file = file.path(folder_patient, 'T1_CSF_tissue')
+  tissue_mask_file = file.path(folder.patient, 'T1_CSF_tissue')
   oro.nifti::writeNIfTI(tissue_mask, tissue_mask_file)
   mri_paths[['csf_mask']] <- paste0(tissue_mask_file,'.nii.gz')
   cat('--Complete.\n\n')
 
   # Path for RAVEL
-  ravel_file = file.path(folder_patient, 'T1_Ravel_norm')
+  ravel_file = file.path(folder.patient, 'T1_Ravel_norm')
   mri_paths[['ravel']] <- paste0(ravel_file ,'.nii.gz')
 
   return(mri_paths)
@@ -65,26 +65,26 @@ preprocess_modality_t1 <- function(mri_patient, folder_patient, atlas, mask, inh
 #' Wrapper function for RAVEL normalization in T1-w images
 #'
 #' Ravel intensity normalization including control voxels and clinical covariates.'
-#' @param masked_paths list or vector of paths of the input NIfTI images to be normalized.
-#' @param csf_paths NIfTI image paths for the binary control region masks.
-#' @param ravel_paths list or vector of paths of the output NIfTI images.
+#' @param masked.paths list or vector of paths of the input NIfTI images to be normalized.
+#' @param csf.paths NIfTI image paths for the binary control region masks.
+#' @param ravel.paths list or vector of paths of the output NIfTI images.
 #' @param demographics table of covariates associated to the MRI scans. Number of rows should be equal to the number of images.
 #' @param brain_mask NIfTI image path for the binary brain mask. Must have value 1 for the brain and 0 otherwise.
-#' @param patients_folder folder to save the output control mask.
+#' @param patients.folder folder to save the output control mask.
 #' @return RAVEL-corrected images are saved in disk.
 #' @export
 ### Ravel Normalization
-image_normalization_ravel <- function(masked_paths, csf_paths, ravel_paths, demographics, brain_mask, patients_folder){
+image_normalization_ravel <- function(masked.paths, csf.paths, ravel.paths, demographics, brain.mask, patients.folder){
 
   ### Control region mask for all patients (masks intersect)
-  mask_intersect_path <- file.path(patients_folder, 'CSF_control_mask.nii.gz')
-  intersect_mask <- RAVEL::maskIntersect(csf_paths, output.file = mask_intersect_path , prob = 0.8)
+  mask_intersect_path <- file.path(patients.folder, 'CSF_control_mask.nii.gz')
+  intersect_mask <- RAVEL::maskIntersect(csf.paths, output.file = mask_intersect_path , prob = 0.8)
 
   # Control for biological covariates
   mod_cov <- model.matrix(~., demographics[,-1])
 
   #RAVEL
-  RAVEL::normalizeRAVEL(input.files = masked_paths, output.files = ravel_paths, brain.mask = brain_mask,
+  RAVEL::normalizeRAVEL(input.files = masked.paths, output.files = ravel.paths, brain.mask = brain.mask,
                  control.mask = intersect_mask, mod = mod_cov , WhiteStripe_Type	= 'T1',
                  k = 1, returnMatrix = FALSE , writeToDisk = TRUE)
 }
@@ -92,18 +92,18 @@ image_normalization_ravel <- function(masked_paths, csf_paths, ravel_paths, demo
 
 #' Preprocess T1-w MRI scan for multiple patients
 #'
-#' This function preprocesses raw T1-w MRI scans and generates a spatially informed MRI scans using the fast algorithm.'
+#' This function preprocesses raw T1-w MRI scans and generates a spatially informed MRI scans using the fast algorithm.
 #' The preprocesising steps comprises imhomogeneity correction 'N4', registration to the MNI152 template with isotropic voxel size of 2mm
 #' using the 'SyN' transformation, skull stripping, and RAVEL intensity normalization.
 #'
-#' @param patients_folder general folder containing folders per patient with raw T1-w images.
-#' @param clinical_covariates table of covariates associated to the MRI scans. Number of rows should be equal to the number of images.
+#' @param patients.folder general folder containing folders per patient with raw T1-w images.
+#' @param clinical.covariates table of covariates associated to the MRI scans. Number of rows should be equal to the number of images.
 #' @return paths of preprocessed MRI scans.
 #' @export
-preprocess_patients <- function(patients_folder, clinical_covariates){
+preprocess_patients <- function(patients.folder, clinical.covariates){
 
   # getting patients scans
-  patients_mri <- load_mri_group(folder_patients)
+  patients_mri <- load_mri_group(patients.folder)
 
   # empty list to save paths
   paths_mri <- list()
@@ -144,7 +144,7 @@ preprocess_patients <- function(patients_folder, clinical_covariates){
   masked_paths <- lapply(paths_mri, function(x){x$syn_masked})
 
   ## ravel algorithm
-  image_normalization_ravel(masked_paths, csf_paths, ravel_paths, clinical_covariates, brainMask, patients_folder)
+  image_normalization_ravel(masked_paths, csf_paths, ravel_paths, clinical.covariates, brainMask, patients.folder)
 
   cat(paste0('--------------------------------------------------\n Preprocess Complete \n--------------------------------------------------\n\n'))
 
