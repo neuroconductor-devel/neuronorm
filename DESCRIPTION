@@ -1,15 +1,20 @@
 Package: neuronorm
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
-Authors@R: 
-    person(given = "First",
-           family = "Last",
-           role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = structure("YOUR-ORCID-ID", .Names = "ORCID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to
-    pick a license
+Title: Preprocessing of structural MRI for multiple neurodegenrative diseases.
+Version: 1.0.0
+Author: David Payares, Wiebke Schick, Jorge Mateu
+Maintainer: David Payares <davidpayaresg@gmail.com>
+Suggests:
+    rmarkdown
+Imports:
+    knitr,
+    oro.nifti,
+    extrantsr,
+    fslr,
+    neurobase,
+    MNITemplate,
+    RAVEL
+Description: Preprocessing pipeline for normalize and clean T1-w MRI images coming from different sources, diseases, patients, scanners and sites.
+License: GPL-2
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

@@ -43,7 +43,7 @@ preprocess_modality_t1 <- function(mri.patient, folder.patient, atlas, mask, inh
   cat('*********************************************\n******** Spatially Informed Layer ***********\n*********************************************\n--Running...\n')
   spatial_file <- file.path(folder.patient, 'T1_spatially_informed.nii.gz')
   spatial_mri = fslr::fast(file = mask_mri, outfile = spatial_file, opts = "--nobias", verbose = FALSE)
-  mri_paths[['spatial']] <- spatial_file
+  mri_paths[['spatial']] <- file.path(folder.patient, 'T1_spatially_informed_pveseg.nii.gz')
   cat('--Complete.\n')
 
   # CSF tissue mask for RAVEL algorithm
@@ -72,6 +72,7 @@ preprocess_modality_t1 <- function(mri.patient, folder.patient, atlas, mask, inh
 #' @param brain_mask NIfTI image path for the binary brain mask. Must have value 1 for the brain and 0 otherwise.
 #' @param patients.folder folder to save the output control mask.
 #' @return RAVEL-corrected images are saved in disk.
+#' @importFrom RAVEL maskIntersect normalizeRAVEL
 #' @export
 ### Ravel Normalization
 image_normalization_ravel <- function(masked.paths, csf.paths, ravel.paths, demographics, brain.mask, patients.folder){
@@ -99,8 +100,14 @@ image_normalization_ravel <- function(masked.paths, csf.paths, ravel.paths, demo
 #' @param patients.folder general folder containing folders per patient with raw T1-w images.
 #' @param clinical.covariates table of covariates associated to the MRI scans. Number of rows should be equal to the number of images.
 #' @return paths of preprocessed MRI scans.
+#' @importFrom MNITemplate getMNIPath readMNI
+#' @importFrom WhiteStripe whitestripe whitestripe_norm
 #' @export
 preprocess_patients <- function(patients.folder, clinical.covariates){
+
+  if(nrow(clinical.covariates) < 1){
+    stop('no covariates provided. File is empty.')
+  }
 
   # getting patients scans
   patients_mri <- load_mri_group(patients.folder)
@@ -108,11 +115,11 @@ preprocess_patients <- function(patients.folder, clinical.covariates){
   # empty list to save paths
   paths_mri <- list()
 
-  # Atlas template (2mm MNI152)
-  mniTemplate <- MNITemplate::getMNIPath("Brain", res="2mm")
+  # Atlas template (MNI152)
+  mniTemplate <- MNITemplate::getMNIPath()
 
-  # Atlas brain mask (2mm MNI152)
-  brainMask = MNITemplate::readMNI("Brain_Mask", res='2mm')
+  # Atlas brain mask (MNI152)
+  brainMask <- MNITemplate::readMNI("Brain_Mask")
 
   # preprocess each patients T1 sequence scan
   for (patient in patients_mri){
@@ -128,7 +135,7 @@ preprocess_patients <- function(patients.folder, clinical.covariates){
     folder_name = folder_name[length(folder_name)]
 
     # Preprocess T1-w image
-    cat(paste0('--------------------------------------------------\n Preprocesing T1-w image in ',folder_name ,'\n--------------------------------------------------\n\n'))
+    message(paste0('--------------------------------------------------\n Preprocesing T1-w image in ',folder_name ,'\n--------------------------------------------------\n\n'))
     patient_scans <- preprocess_modality_t1(pathT1, patient_folder, mniTemplate, brainMask)
 
     # Save preprocessed images paths
@@ -142,6 +149,18 @@ preprocess_patients <- function(patients.folder, clinical.covariates){
   ravel_paths <- lapply(paths_mri, function(x){x$ravel})
   csf_paths <- lapply(paths_mri, function(x){x$csf_mask})
   masked_paths <- lapply(paths_mri, function(x){x$syn_masked})
+
+  if (length(ravel_paths) < nrow(clinical.covariates)){
+    stop("more covariates information than images. Information per MRI scan should be provided.")
+  }
+
+  if (length(ravel_paths) > nrow(clinical.covariates)){
+    stop("more images than covariates information. Information per MRI scan should be provided.")
+  }
+
+  if (length(ravel_paths) < ncol(clinical.covariates)){
+    stop("more covariates than images. Number of covariates can not be greater than number of images.")
+  }
 
   ## ravel algorithm
   image_normalization_ravel(masked_paths, csf_paths, ravel_paths, clinical.covariates, brainMask, patients.folder)
