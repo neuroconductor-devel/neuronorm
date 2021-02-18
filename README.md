@@ -86,7 +86,7 @@ The main purpose of the function `preprocess_patients` is to create preprocessed
 
 ```r
 
-paths_preprocess_patients <- preprocess_patients(folder, clinical_info)
+neuronorm::paths_preprocess_patients <- preprocess_patients(folder, clinical_info)
 
 ```
 
@@ -109,6 +109,8 @@ To visualize the image, the `orthographic` function from the `oro.nifti` package
 <img src="img/preprocessing_neuronorm.jpg" width="600"/>
 
 </p>
+
+Reproducible script and sample data can be found in the [inst folder](https://github.com/DavidPayares/neuronorm/tree/main/inst).
 
 ## References
 
