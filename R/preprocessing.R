@@ -2,7 +2,7 @@
 #'
 #' This function preprocesses a raw T1-w MRI scan and generates a spatially informed MRI data using the fast algorithm.'
 #' The preprocesising steps comprises imhomogeneity correction 'N4', registration to the MNI152 template with isotropic voxel size of 2mm
-#' using the 'SyN' transformation, skull stripping, and RAVEL intensity normalization.
+#' using the 'SyN' transformation, and skull stripping.
 #'
 #' @param mri_patient path of the T1-w scan.
 #' @param folder_patient folder containing the T1-w scan. This folder usually refers as the patient.
@@ -90,8 +90,16 @@ image_normalization_ravel <- function(masked_paths, csf_paths, ravel_paths, demo
 }
 
 
-######## Preprocessing MRI for multiple patients #####
-
+#' Preprocess T1-w MRI scan for multiple patients
+#'
+#' This function preprocesses raw T1-w MRI scans and generates a spatially informed MRI scans using the fast algorithm.'
+#' The preprocesising steps comprises imhomogeneity correction 'N4', registration to the MNI152 template with isotropic voxel size of 2mm
+#' using the 'SyN' transformation, skull stripping, and RAVEL intensity normalization.
+#'
+#' @param patients_folder general folder containing folders per patient with raw T1-w images.
+#' @param clinical_covariates table of covariates associated to the MRI scans. Number of rows should be equal to the number of images.
+#' @return paths of preprocessed MRI scans.
+#' @export
 preprocess_patients <- function(patients_folder, clinical_covariates){
 
   # getting patients scans

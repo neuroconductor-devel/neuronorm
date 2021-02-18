@@ -24,13 +24,13 @@ preprocess_modality_t1(
 
 \item{inhomogeneity}{inhomogeneity correction algorithm to be applied. The correction by default is the 'N4' bias correction.}
 
-\item{trasnformation}{non-linear transformation for registering the T1-w MRI scan to the reference template. 'SyN' is used by default.}
+\item{trasnformation}{non-linear transformation for registering the T1-w MRI scan to the reference template. 'SyN' transformation is used by default.}
 }
 \value{
 paths of preprocessed MRI scans.
 }
 \description{
 This function preprocesses a raw T1-w MRI scan and generates a spatially informed MRI data using the fast algorithm.'
-The preprocesising steps comprises imhomogeneity correction 'N4', registration to the MNI152 template with voxel size of 2mm
-using the 'SyN' transformation, skull stripping, and the RAVEL intensity normalization.
+The preprocesising steps comprises imhomogeneity correction 'N4', registration to the MNI152 template with isotropic voxel size of 2mm
+using the 'SyN' transformation, and skull stripping.
 }
