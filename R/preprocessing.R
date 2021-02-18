@@ -169,3 +169,8 @@ preprocess_patients <- function(patients.folder, clinical.covariates){
 
   return(paths_mri)
 }
+
+
+normalization_adjustment <- function(ravel_paths){
+
+}
