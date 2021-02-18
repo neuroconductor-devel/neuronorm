@@ -14,4 +14,9 @@ You can install NeuroNorm from github using `devtools`.
 devtools::install_github("DavidPayares/neuronorm")
 ```
 
-
+`Neuronorm` relies on many neuroimaging packages: `fslr`, `ANTsr`,  `extrantsr`, `MNITemplate` and `RAVEL`.
+The package `fslr` is available on CRAN, and requires FSL to be installed on
+your machine; see the [FSL website](http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/) for installation. 
+For `ANTsR`,`extrantsr` and `RAVEL`, it is recommended to install the latest stable version available at the [ANTsR GitHub page](https://github.com/stnava/ANTsR/releases/), 
+[extrantsr GitHub page](https://github.com/muschellij2/extrantsr/releases/) and [RAVEL GitHub page](https://github.com/Jfortin1/RAVEL), respectively. 
+For the template space, we use the MNI152 atlas with a isomorfic voxel size of 1mm included in the `MNITemplate` package, available on GitHub at <https://github.com/Jfortin1/MNITemplate>. 
