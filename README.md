@@ -5,6 +5,15 @@ NeuroNorm is an R package that to preprocess structural magnetic resonance imagi
 
 This package is an extension of the master thesis **Detection and Classification of Neurodegenerative Diseases: A Spatially Informed Bayesian neural Network** which conducts a population-level analysis of neurodegenerative patients.
 
+## Background
+
+After the acquisition of an MRI scan, due to the nature of its data, it needs to be processed before any statistical analysis, especially if the study involves multiple sources, multiple scans, and/or multiple subjects. The collection of transformations from the data is called imaging preprocessing. There are numerous steps in imaging preprocessing commonly used to reduce noise, adjust and standardize the data. The steps' order and relevance depend on the study aim and the neurologist criteria. 
+
+The `NeuroNorm` package presents a preprocessing pipeline to transform raw images to images ready for any statistical analysis. First, the `NeuroNorm` package performs inhomogeneity correction using the N4 correction. Then it applies a non-linear registration to the MNI152 template using a diffeomorphism algorithm. It also only extracts the brain tissue using a brain mask derivated from the MNI atlas. The brain extraction is followed by a brain segmentation using Hidden Markov Random Fields (HMRF). The segmented image is considered as a spatially informed scan given the HMRF model properties. A control voxel mask image is obtained for applying the RAVEL intensity normalization. Finally, the intensities are normalized by using the RAVEL algorithm.
+
+The methods and algorithms selected of `NeuroNorm` are a mainstay in the literature of brain imaging of neurodegeneration. `NeuroNorm` proposes a straightforward and simple preprocessing pipeline for integrating images from numerous neurodegenerative processes. 
+
+
 ## Installation
 
 You can install NeuroNorm from github using `devtools`.
@@ -44,18 +53,26 @@ Currently, `NeuroNorm` only supports T1-w sequence scans. However, other modalit
 └── │   ├── T1-w
 ```
 
-### NeuroNorm preprocessing
+### Data Loading
 
-After the acquisition of an MRI scan, due to the nature of its data, it needs to be processed before any statistical analysis, especially if the study involves multiple sources, multiple scans, and/or multiple subjects. The collection of transformations from the data is called imaging preprocessing. There are numerous steps in imaging preprocessing commonly used to reduce noise, adjust and standardize the data. The steps' order and relevance depend on the study aim and the neurologist criteria. 
+`NeuroNorm` only requires two parameters. The first one refers to the folder containing the data (see Data structure). The second parameter corresponds to the covariates of interest needed to perform 
+the RAVEL intensity normalization. Covariates should be associated to the patient's scans. The `NeuroNorm`  packages comes with sample data including images, covariates and folder structure.
 
-The `NeuroNorm` package presents a preprocessing pipeline to transform raw images to images ready for any satistical analysis. First, the `NeuroNorm` package performs inhomogeneity correction using the N4 correction. Then it applies a non-linear registration to the MNI152 template using diffeomorphism algorithm. It also only extracts the brain tissue using a brain mask derivated from the MNI atlas. The brain extraction is followed by a brain segmentation using Hidden Markov Random Fields (HMRF). The segmented image is considered as a spatially informed scan given the HMRF model properties. A control voxel mask image is obtained for applying the RAVEL intensity normalization. Finally, the intensities are normalized by using the RAVEL algorithm.
+```r
 
-Note: the methods and algorithms selected of `NeuroNorm` are mainstay in literature of brain imaging of neurodegenerative disorsers. `NeuroNorm` proposes a staightforward and simple preprocessing pipeline for integrating images from numerous neurodegenrative processes.
+library('neuronorm')
+
+# Get folder with patients' folders
+folder <- system.file("extdata", package = "neuronorm")
+# Get clinical covariates for RAVEL normalization
+covariates <- system.file("covariates.txt", package = "neuronorm")
+# Read covariates information
+clinical_info <- read.csv(file = covariates, sep = ';')
+
+```
 
 
-
-#### Loading data
-
+### Preprocessing 
 
 
 ### Preprocessed images
