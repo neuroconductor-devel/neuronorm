@@ -25,18 +25,23 @@ For the template space, the MNI152 atlas with a isomorfic voxel size of 1mm is u
 
 ### Data extructure
 
-For using `NeuroNorm`, data must follow a specific structure. This makes easier and more intuitive the loading of input MRI scans and organization of output MRI files. MRI images must be in `NiFTI` format.
-It is recommended to store your data in the following structure:
+For using `NeuroNorm`, data must follow a specific structure. This makes easier and more intuitive the loading of input MRI scans and organization of output MRI files. MRI images must be in `NiFTI` format. Currently, `NeuroNorm` only supports T1-w sequence scans. However, other modalities will be implemented in future versions. It is recommended to store your data in the following structure:
 
 ```r
-- general_folder
-  - patient_01
-    - T1-w 
-  - patient_02
-    - T1-w
-  - patient_03
-    - T1-w
-````
+├── General_folder              # main folder
+│   ├── disease01_patient01     # patient-level folder
+│   │   ├── T1-w                # image in NiFTI format
+│   │   ├── T2-w
+│   ├── disease01_patient02
+│   │   ├── T1-w
+│   │   ├── T2-w
+│   ├── disease02_patient01
+│   │   ├── T1-w
+│   │   ├── T2-w
+│   │   ├── FLAIR
+│   ├── disease02_patient02
+└── │   ├── T1-w
+```
 
 ### NeuroNorm preprocessing
 
