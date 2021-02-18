@@ -1,6 +1,0 @@
-install.packages("/mnt/d/M.Sc. Gesopatial Tecnologies/Thesis/Resources/Code/neuronorm")
-library(neuronorm)
-
-
-?neuronorm::load_mri_patient
-  
