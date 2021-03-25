@@ -1,6 +1,6 @@
 #' Preprocess T1-w MRI scan for one patient
 #'
-#' This function preprocesses a raw T1-w MRI scan and generates a spatially informed MRI data using the fast algorithm.'
+#' This function preprocesses a raw T1-w MRI scan and generates a segmentation MRI scan using the fast algorithm.'
 #' The preprocesising steps comprises imhomogeneity correction 'N4', registration to the MNI152 template with isotropic voxel size of 1mm
 #' using the 'SyN' transformation, and skull stripping.
 #'
@@ -44,10 +44,10 @@ preprocess_modality_t1 <- function(mri.patient, folder.patient, atlas, mask, inh
   cat('--Complete.\n')
 
   # Spatially Informed layer
-  cat('*********************************************\n******** Spatially Informed Layer ***********\n*********************************************\n--Running...\n')
+  cat('*********************************************\n******** Segmentation (HMRF) ***********\n*********************************************\n--Running...\n')
   spatial_file <- file.path(folder.patient, 'T1_spatially_informed.nii.gz')
   spatial_mri = fslr::fast(file = mask_mri, outfile = spatial_file, opts = "--nobias", verbose = FALSE)
-  mri_paths[['spatial']] <- file.path(folder.patient, 'T1_spatially_informed_pveseg.nii.gz')
+  mri_paths[['segment']] <- file.path(folder.patient, 'T1_spatially_informed_pveseg.nii.gz')
   cat('--Complete.\n')
 
   # CSF tissue mask for RAVEL algorithm
@@ -69,13 +69,15 @@ preprocess_modality_t1 <- function(mri.patient, folder.patient, atlas, mask, inh
 
 #' Preprocess group of MRI scan for one patient
 #'
-#' This function preprocesses a raw T1-w MRI scan and generates a spatially informed MRI data using the fast algorithm.'
-#' The preprocesising steps comprises imhomogeneity correction 'N4', registration to the MNI152 template with isotropic voxel size of 1mm
+#' This function preprocesses raw T1-w, T2-w and FLAIR MRI scans and generates a segmentation MRI scan using the fast algorithm.'
+#' The preprocesising steps comprises imhomogeneity correction 'N4', coregistration of other sequences to T1-w,
+#' registration to the MNI152 template with isotropic voxel size of 1mm,
 #' using the 'SyN' transformation, and skull stripping.
 #'
 #' @param mri.patient path of the T1-w scan.
 #' @param folder.patient folder containing the T1-w scan. This folder usually refers as the patient.
 #' @param atlas atlas template to spatially register the T1-w scans. By default the MNI152 atlas template is used.
+#' @param modalities vector of modalities to be preprocessed. It must always contains the T1-w sequence scan.
 #' @param mask brain mask of the atlas template to performed the skull stripping.
 #' @param inhomogeneity inhomogeneity correction algorithm to be applied. The correction by default is the 'N4' bias correction.
 #' @param transformation non-linear transformation for registering the T1-w MRI scan to the reference template. 'SyN' transformation is used by default.
@@ -126,10 +128,10 @@ preprocess_modalities <- function(mri.patient, folder.patient, modalities, atlas
   cat('--Complete.\n')
 
   # Spatially Informed layer
-  cat('*********************************************\n******** Spatially Informed Layer ***********\n*********************************************\n--Running...\n')
+  cat('*********************************************\n******** Segmentation (HMRF) ***********\n*********************************************\n--Running...\n')
   spatial_file <- file.path(folder.patient, 'T1_spatially_informed.nii.gz')
   spatial_mri = fslr::fast(file = mask_mri[[1]], outfile = spatial_file, opts = "--nobias", verbose = FALSE, type = 'T1')
-  mri_paths[['spatial']] <- file.path(folder.patient, 'T1_spatially_informed_pveseg.nii.gz')
+  mri_paths[['segmen']] <- file.path(folder.patient, 'T1_spatially_informed_pveseg.nii.gz')
   cat('--Complete.\n')
 
   # CSF tissue mask for RAVEL algorithm
@@ -162,7 +164,7 @@ preprocess_modalities <- function(mri.patient, folder.patient, modalities, atlas
 #' @importFrom RAVEL maskIntersect normalizeRAVEL
 #' @export
 ### Ravel Normalization
-image_normalization_ravel <- function(masked.paths, csf.paths, ravel.paths, demographics, brain.mask, patients.folder){
+image_normalization_ravel <- function(masked.paths, csf.paths, ravel.paths, demographics, brain.mask, patients.folder, modality = 'T1'){
 
   ### Control region mask for all patients (masks intersect)
   mask_intersect_path <- file.path(patients.folder, 'CSF_control_mask.nii.gz')
@@ -173,7 +175,7 @@ image_normalization_ravel <- function(masked.paths, csf.paths, ravel.paths, demo
 
   #RAVEL
   RAVEL::normalizeRAVEL(input.files = masked.paths, output.files = ravel.paths, brain.mask = brain.mask,
-                 control.mask = intersect_mask, mod = mod_cov , WhiteStripe_Type	= 'T1',
+                 control.mask = intersect_mask, mod = mod_cov , WhiteStripe_Type	= modality,
                  k = 1, returnMatrix = FALSE , writeToDisk = TRUE)
 }
 
