@@ -74,9 +74,9 @@ preprocess_modality_t1 <- function(mri.patient, folder.patient, atlas, mask, inh
 #' registration to the MNI152 template with isotropic voxel size of 1mm,
 #' using the 'SyN' transformation, and skull stripping.
 #'
-#' @param mri.patient path of the T1-w scan.
-#' @param folder.patient folder containing the T1-w scan. This folder usually refers as the patient.
-#' @param atlas atlas template to spatially register the T1-w scans. By default the MNI152 atlas template is used.
+#' @param mri.patient path of the MRI scans.
+#' @param folder.patient folder containing the MRI scan. This folder usually refers as the patient.
+#' @param atlas atlas template to spatially register the MRI scans. By default the MNI152 atlas template is used.
 #' @param modalities vector of modalities to be preprocessed. It must always contains the T1-w sequence scan.
 #' @param mask brain mask of the atlas template to performed the skull stripping.
 #' @param inhomogeneity inhomogeneity correction algorithm to be applied. The correction by default is the 'N4' bias correction.
@@ -94,7 +94,7 @@ preprocess_modalities <- function(mri.patient, folder.patient, modalities, atlas
 
   # Inhomogeneity Correction: N4
   cat(paste0('*********************************************\n****** Inhomogeneity Correction: ', inhomogeneity ,' *********\n*********************************************\n--Running...\n'))
-  bias_files <- lapply(modalities, function(x) file.path(paste0(folder.patient, x, '_bias.nii.gz')))
+  bias_files <- lapply(modalities, function(x) file.path(folder.patient, paste0( x, '_bias.nii.gz')))
   bias_mri <- mapply(extrantsr::bias_correct, file = mri.patient, correction = inhomogeneity, outfile = bias_files, verbose = FALSE)
   mri_paths[['bias']]<- bias_files
   cat('--Complete.\n')
@@ -109,7 +109,7 @@ preprocess_modalities <- function(mri.patient, folder.patient, modalities, atlas
 
   # Registration to Template (SyN: Non-linear)
   cat(paste0('*********************************************\n******* Spatial Registration : ',transformation , ' **********\n*********************************************\n--Running...\n'))
-  syn_files <- lapply(modalities, function(x) file.path(paste0(folder.patient, x, '_SyN_MNI152.nii.gz')))
+  syn_files <- lapply(modalities, function(x) file.path(folder.patient, paste0( x, '_SyN_MNI152.nii.gz')))
   if (length(modalities) > 1){
     bias_mris <- create_bias_list(modalities, bias_mri$T1, bias_mri_comp)
     syn_mri <- mapply(extrantsr::ants_regwrite, filename = bias_mris, outfile = syn_files, template.file = atlas, typeofTransform = transformation,  verbose = FALSE)
@@ -121,17 +121,17 @@ preprocess_modalities <- function(mri.patient, folder.patient, modalities, atlas
 
   # Brain Mask
   cat('*********************************************\n*************** Brain Mask ******************\n*********************************************\n--Running...\n')
-  mask_files <- lapply(modalities, function(x) file.path(paste0(folder.patient, x, '_masked')))
+  mask_files <- lapply(modalities, function(x) file.path(folder.patient, paste0( x, '_masked')))
   mask_mri <- lapply(syn_files, neurobase::mask_img, mask)
   mapply( oro.nifti::writeNIfTI, nim = mask_mri, filename = mask_files)
   mri_paths[['syn_masked']] <- paste0(mask_files,'.nii.gz')
   cat('--Complete.\n')
 
   # Spatially Informed layer
-  cat('*********************************************\n******** Segmentation (HMRF) ***********\n*********************************************\n--Running...\n')
+  cat('*********************************************\n******** Spatially Informed Layer ***********\n*********************************************\n--Running...\n')
   spatial_file <- file.path(folder.patient, 'T1_spatially_informed.nii.gz')
   spatial_mri = fslr::fast(file = mask_mri[[1]], outfile = spatial_file, opts = "--nobias", verbose = FALSE, type = 'T1')
-  mri_paths[['segmen']] <- file.path(folder.patient, 'T1_spatially_informed_pveseg.nii.gz')
+  mri_paths[['spatial']] <- file.path(folder.patient, 'T1_spatially_informed_pveseg.nii.gz')
   cat('--Complete.\n')
 
   # CSF tissue mask for RAVEL algorithm
@@ -144,7 +144,7 @@ preprocess_modalities <- function(mri.patient, folder.patient, modalities, atlas
   cat('--Complete.\n\n')
 
   # Path for RAVEL
-  ravel_files <- lapply(modalities, function(x) file.path(paste0(folder.patient, x, '_RAVEL')))
+  ravel_files <- lapply(modalities, function(x) file.path(folder.patient, paste0( x, '_RAVEL')))
   mri_paths[['ravel']] <- paste0(ravel_files ,'.nii.gz')
 
   return(mri_paths)
@@ -215,13 +215,16 @@ preprocess_patients <- function(patients.folder, clinical.covariates){
     # selecting patient's folder
     patient_folder <- dirname(patient$T1)
 
+    # getting modalities
+    modalities <- get_modalities(patient_folder)
+
     # getting folder name
     folder_name = unlist(strsplit(patient_folder, '/'))
     folder_name = folder_name[length(folder_name)]
 
-    # Preprocess T1-w image
-    message(paste0('--------------------------------------------------\n Preprocesing T1-w image in ',folder_name ,'\n--------------------------------------------------\n\n'))
-    patient_scans <- preprocess_modality_t1(patient$T1, patient_folder, mniTemplate, brainMask)
+    # Preprocess images
+    message(paste0('--------------------------------------------------\n Preprocesing images in ',folder_name ,'\n--------------------------------------------------\n\n'))
+    patient_scans <- preprocess_modalities(patient, patient_folder, modalities, mniTemplate, brainMask)
 
     # Save preprocessed images paths
     paths_mri[[folder_name]] <- patient_scans
