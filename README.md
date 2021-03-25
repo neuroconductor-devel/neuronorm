@@ -1,7 +1,7 @@
 
 # NeuroNorm <img src="img/neuro_sticker.png" align="right" width="160" />
 
-NeuroNorm is an R package to preprocess structural magnetic resonance imaging (MRI) from multiple patients, diseases, scanners, and sites. NeuroNorm transformed multiple raw T1-w images in the NIfTI format into preprocessed images comparable across patients, sites, and diseases. Neuronorm performs inhomogeneity correction, spatial registration to a template, skull stripping, spatially informed MRI scan (brain segmentation) generation, intensity normalization, and intensity adjustment. NeuroNorm comes up as a standard procedure to compare and analyze multiple T1-w scans of different neurodegenerative diseases.
+NeuroNorm is an R package to preprocess structural magnetic resonance imaging (MRI) from multiple patients, diseases, scanners, and sites. NeuroNorm transformed multiple raw T1-w, T2-w and FLAIR images in the NIfTI format into preprocessed images comparable across patients, sites, and diseases. Neuronorm performs inhomogeneity correction, spatial registration to a template, skull stripping, spatially informed MRI scan (brain segmentation) generation, intensity normalization, and intensity adjustment. NeuroNorm comes up as a standard procedure to compare and analyze multiple MRI scans of different neurodegenerative diseases.
 
 This package is an extension of the master thesis **Detection and Classification of Neurodegenerative Diseases: A Spatially Informed Bayesian neural Network** which conducts a population-level analysis of neurodegenerative patients.
 
@@ -35,7 +35,7 @@ For the template space, the MNI152 atlas with an isomorphic voxel size of 1mm is
 ### Data extructure
 
 For using `NeuroNorm`, data must follow a specific structure. This makes easier and more intuitive the loading of input MRI scans and organization of output MRI files. MRI images must be in `NiFTI` format. 
-Currently, `NeuroNorm` only supports T1-w sequence scans. However, other modalities will be implemented in future versions. It is recommended to store your data in the following structure:
+Currently, `NeuroNorm` only supports T1-w, T2-w and FLAIR sequence scans. However, other modalities will be implemented in future versions. It is recommended to store your data in the following structure:
 
 ```r
 ├── General_folder              # main folder
