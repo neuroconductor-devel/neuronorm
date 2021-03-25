@@ -1,8 +1,8 @@
 #' Create a vector of the coregister images based on the images modalities
 #'
 #' This function creates a vector of corregistered images for a patient.
-#' The vector contains whether a vector of length one for only one modality (T1 or FLAIR)
-#' or a vector of length two including both modalities.
+#' The vector contains whether a vector of length one for only one modality (T2 or FLAIR)
+#' or a vector of length two including both modalities (T2 and FLAIR).
 #'
 #' @param vector output object from the coregistration function.
 #' @export
@@ -16,6 +16,14 @@ coregistration_images <- function(vector){
 }
 
 
+#' Create a vector of bias images based on the images modalities
+#'
+#' This function creates a vector of bias images for a patient.
+#' The vector contains whether a vector of length one for only one modality (T1)
+#' or a vector of length two/three including all modalities.
+#'
+#' @param vector output object from the coregistration function.
+#' @export
 create_bias_list <- function(modalities, bias_T1, list_corregister){
   bias_mris <- list()
   bias_mris$T1 <- bias_T1
