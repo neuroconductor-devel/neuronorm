@@ -45,7 +45,7 @@ get_modalities <- function(patient){
   if ('T1' %in% names){
     modalities <- names
   }else{
-    stop('Preprocessing can not be performed without a T1-weighted scan. Please make sure your folder contains a T1-w image.')
+    stop('Preprocessing can not be performed without a T1-weighted scan. Please make sure your folders contains a T1-w image.')
   }
   return(modalities)
 }

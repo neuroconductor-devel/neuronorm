@@ -101,7 +101,7 @@ preprocess_modalities <- function(mri.patient, folder.patient, modalities, atlas
 
   # Coregistration to T1-weighted image : Rigid Transformation
   if (length(modalities) > 1){
-    cat(paste0('*********************************************\n****** Coregistration to T1 sequence *********\n*********************************************\n--Running...\n'))
+    cat(paste0('*********************************************\n****** Coregistration to T1 sequence ********\n*********************************************\n--Running...\n'))
     coregisteredImg <- extrantsr::within_visit_registration(fixed = mri.patient$T1, moving = bias_files[2:length(mri.patient)], typeofTransform = "Rigid", interpolator = "Linear", verbose = FALSE)
     bias_mri_comp <- coregistration_images(coregisteredImg)
     cat('--Complete.\n')
@@ -144,8 +144,8 @@ preprocess_modalities <- function(mri.patient, folder.patient, modalities, atlas
   cat('--Complete.\n\n')
 
   # Path for RAVEL
-  ravel_files <- lapply(modalities, function(x) file.path(folder.patient, paste0( x, '_RAVEL')))
-  mri_paths[['ravel']] <- paste0(ravel_files ,'.nii.gz')
+  ravel_file = file.path(folder.patient, 'T1_Ravel_norm')
+  mri_paths[['ravel']] <- paste0(ravel_file ,'.nii.gz')
 
   return(mri_paths)
 }
@@ -251,13 +251,12 @@ preprocess_patients <- function(patients.folder, clinical.covariates){
   }
 
   ## ravel algorithm
-  image_normalization_ravel(masked_paths, csf_paths, ravel_paths, clinical.covariates, brainMask, patients.folder)
+  masked_paths_T1 <- lapply(masked_paths, function(x) x[grepl("T1", x)])
+  image_normalization_ravel(masked_paths_T1, csf_paths, ravel_paths, clinical.covariates, brainMask, patients.folder)
 
   cat(paste0('--------------------------------------------------\n Preprocess Complete \n--------------------------------------------------\n\n'))
 
   return(paths_mri)
 }
-
-
 
 

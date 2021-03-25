@@ -10,7 +10,8 @@ image_normalization_ravel(
   ravel.paths,
   demographics,
   brain.mask,
-  patients.folder
+  patients.folder,
+  modality = "T1"
 )
 }
 \arguments{
