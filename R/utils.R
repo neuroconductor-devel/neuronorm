@@ -33,3 +33,19 @@ create_bias_list <- function(modalities, bias_T1, list_corregister){
   }
   return(bias_mris)
 }
+
+
+#' Create a vector with the image modalities in each patient folder
+#'
+#' This function creates a vector with the name of the image modalitities fpr a patient.
+#' @param patient paths of MRI scan per patient.
+#' @export
+get_modalities <- function(patient){
+  names <- names(patient)
+  if ('T1' %in% names){
+    modalities <- names
+  }else{
+    stop('Preprocessing can not be performed without a T1-weighted scan. Please make sure your folder contains a T1-w image.')
+  }
+  return(modalities)
+}
