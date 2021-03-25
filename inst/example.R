@@ -32,11 +32,5 @@ require('oro.nifti')
 img <- readNIfTI(file.path(paths_preprocess_patients$patient04$ravel))
 orthographic(img)
 
-devtools::install('/mnt/d/M.Sc. Gesopatial Tecnologies/Thesis/Resources/Code/neuronorm')
-
-
-remove.packages('neuronorm')
-
-
 
 

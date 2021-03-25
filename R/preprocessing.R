@@ -216,7 +216,7 @@ preprocess_patients <- function(patients.folder, clinical.covariates){
     patient_folder <- dirname(patient$T1)
 
     # getting modalities
-    modalities <- get_modalities(patient_folder)
+    modalities <- get_modalities(patient)
 
     # getting folder name
     folder_name = unlist(strsplit(patient_folder, '/'))
