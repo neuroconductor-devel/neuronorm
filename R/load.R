@@ -34,7 +34,7 @@ load_mri_patient <- function(folder, modalities = c('T1','T2','FLAIR')){
 #' @return paths of MRI scans per patient if they exist.
 #' @export
 load_mri_group <- function(folder){
-  folders <- list.dirs(folder, full.names = TRUE, recursive = TRUE)
+  folders <- list.dirs(folder, full.names = TRUE, recursive = FALSE)
   mri_images <- list()
   cat('--------------------------------------------------\n')
   for (fold in folders){

@@ -36,3 +36,7 @@ devtools::install('/mnt/d/M.Sc. Gesopatial Tecnologies/Thesis/Resources/Code/neu
 
 
 remove.packages('neuronorm')
+
+
+
+
