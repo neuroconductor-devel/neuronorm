@@ -60,7 +60,7 @@ preprocess_modality_t1 <- function(mri.patient, folder.patient, atlas, mask, inh
   cat('--Complete.\n\n')
 
   # Path for RAVEL
-  ravel_file = file.path(folder.patient, 'T1_Ravel_norm')
+  ravel_file = file.path(folder.patient, paste0(folder.patient, '_T1_Ravel_norm'))
   mri_paths[['ravel']] <- paste0(ravel_file ,'.nii.gz')
 
   return(mri_paths)
