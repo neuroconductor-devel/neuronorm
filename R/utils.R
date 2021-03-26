@@ -24,12 +24,16 @@ coregistration_images <- function(vector){
 #'
 #' @param vector output object from the coregistration function.
 #' @export
-create_bias_list <- function(modalities, bias_T1, list_corregister){
+create_bias_list <- function (modalities, bias_T1, list_corregister){
   bias_mris <- list()
   bias_mris$T1 <- bias_T1
-  for (n in 1:length(list_corregister)){
-    modality <- modalities[[n+1]]
-    bias_mris[[modality]] <- list_corregister[[1]]
+  if (length(list_corregister)== 2){
+    for (n in 1:length(list_corregister)) {
+      modality <- modalities[[n + 1]]
+      bias_mris[[modality]] <- list_corregister[[1]]
+    }
+  }else{
+    bias_mris$T2 <- list_corregister
   }
   return(bias_mris)
 }
