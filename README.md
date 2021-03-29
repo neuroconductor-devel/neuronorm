@@ -20,7 +20,7 @@ You can install NeuroNorm from github using `devtools`.
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("DavidPayares/neuronorm")
+devtools::install_github("DavidPayares/neuronorm@main")
 ```
 
 `NeuroNorm` relies on many neuroimaging packages: `fslr`, `ANTsr`,  `extrantsr`, `MNITemplate` and `RAVEL`.
