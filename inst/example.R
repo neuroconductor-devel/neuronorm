@@ -2,7 +2,7 @@
 ## ----------------------- Installation  --------------------------
 
 # install.packages("devtools")
-devtools::install_github("DavidPayares/neuronorm")
+devtools::install_github("DavidPayares/neuronorm@main")
 
 ## ----------------------- Data Loading  --------------------------
 
@@ -19,7 +19,7 @@ clinical_info <- read.csv(file = covariates, sep = ';')
 
 require('neuronorm')
 # Preprocess MRI scans: 'N4' inhomogeneity correction, 'SyN' non-linear transformation to MNI152 atlas template
-# Brain extraction, Spatial informed MRI scan , a.k.a., brain segmentation and RAVEL intensity normalization.
+# Brain extraction, Spatial informed MRI scan , a.k.a., brain segmentation and RAVEL intensity normalization only for T1-w images.
 paths_preprocess_patients <- preprocess_patients(folder, clinical_info)
 
 # Outputs paths of the preprocessed MRI scans.
