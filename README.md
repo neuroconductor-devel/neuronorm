@@ -85,7 +85,7 @@ The main purpose of the function `preprocess_patients` is to create preprocessed
 
 ```r
 
-neuronorm::paths_preprocess_patients <- preprocess_patients(folder, clinical_info)
+paths_preprocess_patients <- neuronorm::preprocess_patients(folder, clinical_info)
 
 ```
 
@@ -97,7 +97,7 @@ After executing the `preprocess_patients`, a `list` of paths is created. The lis
 
 library('oro.nifti')
 
-img <- readNIfTI(file.path(paths_preprocess_patients$patient01$ravel))
+img <- oro.nifti::readNIfTI(file.path(paths_preprocess_patients$patient01$ravel))
 orthographic(img)
 
 ```
