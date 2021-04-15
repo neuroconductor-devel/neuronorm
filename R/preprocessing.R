@@ -128,7 +128,7 @@ preprocess_modalities <- function(mri.patient, folder.patient, modalities, atlas
   cat('--Complete.\n')
 
   # Spatially Informed layer
-  cat('*********************************************\n******** Spatially Informed Layer ***********\n*********************************************\n--Running...\n')
+  cat('*********************************************\n******** Brain Segmentation ***********\n*********************************************\n--Running...\n')
   spatial_file <- file.path(folder.patient, 'T1_spatially_informed.nii.gz')
   spatial_mri = fslr::fast(file = mask_mri[[1]], outfile = spatial_file, opts = "--nobias", verbose = FALSE, type = 'T1')
   mri_paths[['spatial']] <- file.path(folder.patient, 'T1_spatially_informed_pveseg.nii.gz')
@@ -254,7 +254,7 @@ preprocess_patients <- function(patients.folder, clinical.covariates){
   masked_paths_T1 <- lapply(masked_paths, function(x) x[grepl("T1", x)])
   image_normalization_ravel(masked_paths_T1, csf_paths, ravel_paths, clinical.covariates, brainMask, patients.folder)
 
-  cat(paste0('--------------------------------------------------\n Preprocess Complete \n--------------------------------------------------\n\n'))
+  cat(paste0('--------------------------------------------------\n Preprocessing Complete \n--------------------------------------------------\n\n'))
 
   return(paths_mri)
 }

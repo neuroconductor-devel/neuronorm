@@ -23,13 +23,13 @@ require('neuronorm')
 paths_preprocess_patients <- preprocess_patients(folder, clinical_info)
 
 # Outputs paths of the preprocessed MRI scans.
-paths_preprocess_patients
+paths_preprocess_patients$patient02$bias[[1]]
 
 ## ----------------------- Image Visualization  --------------------------
 
 require('oro.nifti')
 # visualize a preprocessed MRI scan for a patient.
-img <- readNIfTI(file.path(paths_preprocess_patients$patient04$ravel))
+img <- readNIfTI(file.path(paths_preprocess_patients$patient02$bias[[1]]))
 orthographic(img)
 
 
