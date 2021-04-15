@@ -1,9 +1,9 @@
 
 # NeuroNorm <img src="img/neuro_sticker.png" align="right" width="160" />
 
-NeuroNorm is an R package to preprocess structural magnetic resonance imaging (MRI) from multiple patients, diseases, scanners, and sites. NeuroNorm transformed multiple raw T1-w, T2-w and FLAIR images in the NIfTI format into preprocessed images comparable across patients, sites, and diseases. Neuronorm performs inhomogeneity correction, spatial registration to a template, skull stripping, spatially informed MRI scan (brain segmentation) generation, intensity normalization, and intensity adjustment. NeuroNorm comes up as a standard procedure to compare and analyze multiple MRI scans of different neurodegenerative diseases.
+NeuroNorm is an R package to preprocess structural magnetic resonance imaging (MRI) from multiple patients, diseases, scanners, and sites. NeuroNorm transforms multiple raw T1-w, T2-w and FLAIR images in the NIfTI format into preprocessed images comparable across patients, sites, and diseases. Neuronorm performs inhomogeneity correction, spatial registration to a template, skull stripping, spatially informed MRI scan (brain segmentation) generation, intensity normalization, and intensity adjustment. NeuroNorm comes up as a standard procedure to compare and analyze multiple MRI scans of different braimn disorders.
 
-This package is an extension of the master thesis **Detection and Classification of Neurodegenerative Diseases: A Spatially Informed Bayesian neural Network** which conducts a population-level analysis of neurodegenerative patients.
+This package is an extension of the master thesis **Detection and Classification of Neurodegenerative Diseases: A Spatially Informed Bayesian neural Network** which conducts a population-level analysis ofpatients with neurodegenerative diseases.
 
 ## Background
 
@@ -11,7 +11,7 @@ After the acquisition of an MRI scan, due to the nature of its data, it needs to
 
 The `NeuroNorm` package presents a preprocessing pipeline to transform raw images to images ready for any statistical analysis. First, the `NeuroNorm` package performs inhomogeneity correction using the N4 correction. Then it applies a non-linear registration to the MNI152 template using a diffeomorphism algorithm. It also only extracts the brain tissue using a brain mask derivated from the MNI atlas. The brain extraction is followed by a brain segmentation using Hidden Markov Random Fields (HMRF). The segmented image is considered as a spatially informed scan given the HMRF model properties. A control voxel mask image is obtained for applying the RAVEL intensity normalization. Finally, the intensities are normalized by using the RAVEL algorithm.
 
-The methods and algorithms selected of `NeuroNorm` are a mainstay in the literature of brain imaging of neurodegeneration. `NeuroNorm` proposes a straightforward and simple preprocessing pipeline for integrating images from numerous neurodegenerative processes. 
+The methods and algorithms selected of `NeuroNorm` are state-of.the-art methods in the literature of brain imaging of neurodegeneration. `NeuroNorm` proposes a straightforward and simple preprocessing pipeline for integrating images from numerous neurodegenerative processes. 
 
 
 ## Installation
@@ -85,7 +85,7 @@ The main purpose of the function `preprocess_patients` is to create preprocessed
 
 ```r
 
-neuronorm::paths_preprocess_patients <- preprocess_patients(folder, clinical_info)
+paths_preprocess_patients <- neuronorm::preprocess_patients(folder, clinical_info)
 
 ```
 
@@ -97,7 +97,7 @@ After executing the `preprocess_patients`, a `list` of paths is created. The lis
 
 library('oro.nifti')
 
-img <- readNIfTI(file.path(paths_preprocess_patients$patient01$ravel))
+img <- oro.nifti::readNIfTI(file.path(paths_preprocess_patients$patient01$ravel))
 orthographic(img)
 
 ```
