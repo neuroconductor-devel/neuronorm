@@ -91,7 +91,7 @@ paths_preprocess_patients <- neuronorm::preprocess_patients(folder, clinical_inf
 
 ### Preprocessed images
 
-After executing the `preprocess_patients`, a `list` of paths is created. The list containes the relatives paths to each of the preprocessed images organized by patient folder.
+After executing the `preprocess_patients`, a `list` of paths is created. The list contains the relatives paths to each of the preprocessed images organized by patient folder.
 
 ```r
 
