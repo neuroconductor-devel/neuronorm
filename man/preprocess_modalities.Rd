@@ -36,5 +36,5 @@ paths of preprocessed MRI scans.
 This function preprocesses raw T1-w, T2-w and FLAIR MRI scans and generates a segmentation MRI scan using the fast algorithm.'
 The preprocesising steps comprises imhomogeneity correction 'N4', coregistration of other sequences to T1-w,
 registration to the MNI152 template with isotropic voxel size of 1mm,
-using the 'SyN' transformation, and skull stripping.
+using the 'SyN' transformation, skull stripping, brain segmentation and intensity normalization via RAVEL or White Stripe.
 }

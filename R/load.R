@@ -40,7 +40,7 @@ load_mri_group <- function(folder){
   for (fold in folders){
     fold_name = unlist(strsplit(fold, '/'))
     fold_name = fold_name[length(fold_name)]
-    message (paste0('Reading folder ', fold_name))
+    message(paste0('Reading folder ', fold_name))
     mri_patient <- load_mri_patient(fold)
     if (length(mri_patient) > 0){
       mri_images[[fold_name]] <- mri_patient

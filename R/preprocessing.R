@@ -32,7 +32,7 @@ preprocess_modality_t1 <- function(mri.patient, folder.patient, atlas, mask, inh
   cat(paste0('*********************************************\n******* Spatial Registration : ',transformation , ' **********\n*********************************************\n--Running...\n'))
   syn_file <-file.path(folder.patient, 'T1_SyN.nii.gz')
   syn_mri <- extrantsr::ants_regwrite(filename = bias_mri, outfile = syn_file, template.file = atlas, typeofTransform = transformation, verbose = FALSE)
-  mri_paths[['syn']] <- syn_file
+  mri_paths[['registered']] <- syn_file
   cat('--Complete.\n')
 
   # Brain Mask
@@ -40,14 +40,14 @@ preprocess_modality_t1 <- function(mri.patient, folder.patient, atlas, mask, inh
   mask_file <- file.path(folder.patient, 'T1_masked_SyN')
   mask_mri = neurobase::mask_img(syn_file, mask)
   oro.nifti::writeNIfTI(mask_mri, mask_file)
-  mri_paths[['syn_masked']] <- paste0(mask_file,'.nii.gz')
+  mri_paths[['striped']] <- paste0(mask_file,'.nii.gz')
   cat('--Complete.\n')
 
   # Spatially Informed layer
   cat('*********************************************\n******** Segmentation (HMRF) ***********\n*********************************************\n--Running...\n')
   spatial_file <- file.path(folder.patient, 'T1_spatially_informed.nii.gz')
   spatial_mri = fslr::fast(file = mask_mri, outfile = spatial_file, opts = "--nobias", verbose = FALSE)
-  mri_paths[['segment']] <- file.path(folder.patient, 'T1_spatially_informed_pveseg.nii.gz')
+  mri_paths[['segmented']] <- file.path(folder.patient, 'T1_spatially_informed_pveseg.nii.gz')
   cat('--Complete.\n')
 
   # CSF tissue mask for RAVEL algorithm
@@ -72,7 +72,7 @@ preprocess_modality_t1 <- function(mri.patient, folder.patient, atlas, mask, inh
 #' This function preprocesses raw T1-w, T2-w and FLAIR MRI scans and generates a segmentation MRI scan using the fast algorithm.'
 #' The preprocesising steps comprises imhomogeneity correction 'N4', coregistration of other sequences to T1-w,
 #' registration to the MNI152 template with isotropic voxel size of 1mm,
-#' using the 'SyN' transformation, and skull stripping.
+#' using the 'SyN' transformation, skull stripping, brain segmentation and intensity normalization via RAVEL or White Stripe.
 #'
 #' @param mri.patient path of the MRI scans.
 #' @param folder.patient folder containing the MRI scan. This folder usually refers as the patient.
@@ -116,7 +116,7 @@ preprocess_modalities <- function(mri.patient, folder.patient, modalities, atlas
   }else{
     syn_mri <- extrantsr::ants_regwrite(filename = bias_files[[1]], outfile = syn_files[[1]], template.file = atlas, typeofTransform = transformation, verbose = FALSE)
   }
-  mri_paths[['syn']] <- syn_files
+  mri_paths[['registered']] <- syn_files
   cat('--Complete.\n')
 
   # Brain Mask
@@ -124,14 +124,14 @@ preprocess_modalities <- function(mri.patient, folder.patient, modalities, atlas
   mask_files <- lapply(modalities, function(x) file.path(folder.patient, paste0( x, '_masked')))
   mask_mri <- lapply(syn_files, neurobase::mask_img, mask)
   mapply( oro.nifti::writeNIfTI, nim = mask_mri, filename = mask_files)
-  mri_paths[['syn_masked']] <- paste0(mask_files,'.nii.gz')
+  mri_paths[['stripped']] <- paste0(mask_files,'.nii.gz')
   cat('--Complete.\n')
 
   # Spatially Informed layer
   cat('*********************************************\n******** Brain Segmentation ***********\n*********************************************\n--Running...\n')
   spatial_file <- file.path(folder.patient, 'T1_spatially_informed.nii.gz')
   spatial_mri = fslr::fast(file = mask_mri[[1]], outfile = spatial_file, opts = "--nobias", verbose = FALSE, type = 'T1')
-  mri_paths[['spatial']] <- file.path(folder.patient, 'T1_spatially_informed_pveseg.nii.gz')
+  mri_paths[['segmented']] <- file.path(folder.patient, 'T1_spatially_informed_pveseg.nii.gz')
   cat('--Complete.\n')
 
   # CSF tissue mask for RAVEL algorithm
@@ -193,8 +193,12 @@ image_normalization_ravel <- function(masked.paths, csf.paths, ravel.paths, demo
 #' @export
 preprocess_patients <- function(patients.folder, clinical.covariates){
 
-  if(nrow(clinical.covariates) < 1){
-    stop('no covariates provided. File is empty.')
+  if(missing(clinical.covariates)) {
+    message("No covariates provided. Intensity normalization step will use the White Stripe algorithm instead of RAVEL.\n")
+  } else {
+    if(nrow(clinical.covariates) < 1){
+      stop('no covariates provided. File is empty.')
+    }
   }
 
   # getting patients scans
@@ -231,28 +235,33 @@ preprocess_patients <- function(patients.folder, clinical.covariates){
   }
 
   ### RAVEL
-  cat('*********************************************\n*********** RAVEL normalization *************\n*********************************************\n--Running...\n')
 
   ## Group paths for ravel
   ravel_paths <- lapply(paths_mri, function(x){x$ravel})
   csf_paths <- lapply(paths_mri, function(x){x$csf_mask})
   masked_paths <- lapply(paths_mri, function(x){x$syn_masked})
-
-  if (length(ravel_paths) < nrow(clinical.covariates)){
-    stop("more covariates information than images. Information per MRI scan should be provided.")
-  }
-
-  if (length(ravel_paths) > nrow(clinical.covariates)){
-    stop("more images than covariates information. Information per MRI scan should be provided.")
-  }
-
-  if (length(ravel_paths) < ncol(clinical.covariates)){
-    stop("more covariates than images. Number of covariates can not be greater than number of images.")
-  }
-
-  ## ravel algorithm
   masked_paths_T1 <- lapply(masked_paths, function(x) x[grepl("T1", x)])
-  image_normalization_ravel(masked_paths_T1, csf_paths, ravel_paths, clinical.covariates, brainMask, patients.folder)
+
+
+  if(missing(clinical.covariates)) {
+    cat('*********************************************\n******** White Stripe normalization **********\n*********************************************\n--Running...\n')
+    RAVEL::normalizeWS(input.files = masked_paths_T1, output.files = ravel_paths, brain.mask = brainMask, WhiteStripe_Type = "T1", returnMatrix = FALSE , writeToDisk = TRUE)
+  } else {
+    if (length(ravel_paths) < nrow(clinical.covariates)){
+      stop("more covariates information than images. Information per MRI scan should be provided.")
+    }
+
+    if (length(ravel_paths) > nrow(clinical.covariates)){
+      stop("more images than covariates information. Information per MRI scan should be provided.")
+    }
+
+    if (length(ravel_paths) < ncol(clinical.covariates)){
+      stop("more covariates than images. Number of covariates can not be greater than number of images.")
+    }
+
+    ## ravel algorithm
+    image_normalization_ravel(masked_paths_T1, csf_paths, ravel_paths, clinical.covariates, brainMask, patients.folder)
+  }
 
   cat(paste0('--------------------------------------------------\n Preprocessing Complete \n--------------------------------------------------\n\n'))
 
