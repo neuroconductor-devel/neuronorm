@@ -1,13 +1,13 @@
-#' Preprocess T1-w MRI scan for one patient
+#' Preprocess T1-weighted MRI scan for one patient
 #'
-#' This function preprocesses a raw T1-w MRI scan and generates a segmentation MRI scan using the fast algorithm.'
+#' This function preprocesses a raw T1-w MRI scan and generates a segmentation MRI scan using the FAST algorithm.
 #' The preprocesising steps comprises imhomogeneity correction 'N4', registration to the MNI152 template with isotropic voxel size of 1mm
 #' using the 'SyN' transformation, and skull stripping.
 #'
-#' @param mri.patient path of the T1-w scan.
-#' @param folder.patient folder containing the T1-w scan. This folder usually refers as the patient.
-#' @param atlas atlas template to spatially register the T1-w scans. By default the MNI152 atlas template is used.
-#' @param mask brain mask of the atlas template to performed the skull stripping.
+#' @param mri.patient path of the T1-weighted scan.
+#' @param folder.patient folder containing the T1-weighted scan. This folder usually refers to the patient.
+#' @param atlas atlas template in NifTI format to spatially register the T1-weighted scans. By default the MNI152 atlas template is used.
+#' @param mask brain mask in NifTI format of the atlas template to performed the skull stripping.
 #' @param inhomogeneity inhomogeneity correction algorithm to be applied. The correction by default is the 'N4' bias correction.
 #' @param transformation non-linear transformation for registering the T1-w MRI scan to the reference template. 'SyN' transformation is used by default.
 #' @return paths of preprocessed MRI scans.
@@ -18,7 +18,7 @@
 #' @export
 preprocess_modality_t1 <- function(mri.patient, folder.patient, atlas, mask, inhomogeneity = "N4", transformation = "SyN"){
 
-  # empty list to save paths
+  # Empty list to save paths
   mri_paths <- list()
 
   # Inhomogeneity Correction: N4
@@ -43,7 +43,7 @@ preprocess_modality_t1 <- function(mri.patient, folder.patient, atlas, mask, inh
   mri_paths[['striped']] <- paste0(mask_file,'.nii.gz')
   cat('--Complete.\n')
 
-  # Spatially Informed layer
+  # Spatially Informed layer (Segmentation layer)
   cat('*********************************************\n******** Segmentation (HMRF) ***********\n*********************************************\n--Running...\n')
   spatial_file <- file.path(folder.patient, 'T1_spatially_informed.nii.gz')
   spatial_mri = fslr::fast(file = mask_mri, outfile = spatial_file, opts = "--nobias", verbose = FALSE)
@@ -69,16 +69,16 @@ preprocess_modality_t1 <- function(mri.patient, folder.patient, atlas, mask, inh
 
 #' Preprocess group of MRI scan for one patient
 #'
-#' This function preprocesses raw T1-w, T2-w and FLAIR MRI scans and generates a segmentation MRI scan using the fast algorithm.'
-#' The preprocesising steps comprises imhomogeneity correction 'N4', coregistration of other sequences to T1-w,
-#' registration to the MNI152 template with isotropic voxel size of 1mm,
-#' using the 'SyN' transformation, skull stripping, brain segmentation and intensity normalization via RAVEL or White Stripe.
+#' This function preprocesses raw T1-weighted, T2-weighted and FLAIR MRI scans and generates a segmentation MRI scan using the FAST algorithm.
+#' The preprocesising steps comprises imhomogeneity correction 'N4', coregistration of other sequences to the T1-weighted scan,
+#' non-linear registration to the MNI152 template with an isotropic voxel size of 1mm,
+#' using the 'SyN' transformation, skull stripping, brain segmentation and intensity normalization using the RAVEL or White Stripe algorithms.
 #'
 #' @param mri.patient path of the MRI scans.
-#' @param folder.patient folder containing the MRI scan. This folder usually refers as the patient.
-#' @param atlas atlas template to spatially register the MRI scans. By default the MNI152 atlas template is used.
-#' @param modalities vector of modalities to be preprocessed. It must always contains the T1-w sequence scan.
-#' @param mask brain mask of the atlas template to performed the skull stripping.
+#' @param folder.patient folder containing the MRI scans. This folder usually refers to the patient.
+#' @param atlas atlas template in NifTI format to spatially register the MRI scans. By default the MNI152 atlas template is used.
+#' @param modalities vector of strings containing the modalities to be preprocessed. It must always contains the T1-weighted sequence scan.
+#' @param mask brain mask in NifTI format of the atlas template to performed the skull stripping.
 #' @param inhomogeneity inhomogeneity correction algorithm to be applied. The correction by default is the 'N4' bias correction.
 #' @param transformation non-linear transformation for registering the T1-w MRI scan to the reference template. 'SyN' transformation is used by default.
 #' @return paths of preprocessed MRI scans.
@@ -151,7 +151,7 @@ preprocess_modalities <- function(mri.patient, folder.patient, modalities, atlas
 }
 
 
-#' Wrapper function for RAVEL normalization in T1-w images
+#' Wrapper function for RAVEL normalization of T1-weighted images
 #'
 #' Ravel intensity normalization including control voxels and clinical covariates.'
 #' @param masked.paths list or vector of paths of the input NIfTI images to be normalized.
