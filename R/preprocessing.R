@@ -1,7 +1,7 @@
 #' Preprocess T1-weighted MRI scan for one patient
 #'
 #' This function preprocesses a raw T1-w MRI scan and generates a segmentation MRI scan using the FAST algorithm.
-#' The preprocesising steps comprises imhomogeneity correction 'N4', registration to the MNI152 template with isotropic voxel size of 1mm
+#' The preprocesising steps comprises imhomogeneity correction 'N4', registration to the MNI152 template with isotropic voxel size of 1mm^3
 #' using the 'SyN' transformation, and skull stripping.
 #'
 #' @param mri.patient path of the T1-weighted scan.
@@ -153,12 +153,12 @@ preprocess_modalities <- function(mri.patient, folder.patient, modalities, atlas
 
 #' Wrapper function for RAVEL normalization of T1-weighted images
 #'
-#' Ravel intensity normalization including control voxels and clinical covariates.'
-#' @param masked.paths list or vector of paths of the input NIfTI images to be normalized.
+#' Ravel intensity normalization using control voxels and clinical covariates.
+#' @param masked.paths list or vector of paths of the preprocessed input NIfTI images to be normalized.
 #' @param csf.paths NIfTI image paths for the binary control region masks.
 #' @param ravel.paths list or vector of paths of the output NIfTI images.
 #' @param demographics table of covariates associated to the MRI scans. Number of rows should be equal to the number of images.
-#' @param brain_mask NIfTI image path for the binary brain mask. Must have value 1 for the brain and 0 otherwise.
+#' @param brain_mask NIfTI image path for the binary brain mask. Must have value 1 for the brain tissue and 0 otherwise.
 #' @param patients.folder folder to save the output control mask.
 #' @return RAVEL-corrected images are saved in disk.
 #' @importFrom RAVEL maskIntersect normalizeRAVEL
@@ -180,15 +180,15 @@ image_normalization_ravel <- function(masked.paths, csf.paths, ravel.paths, demo
 }
 
 
-#' Preprocess T1-w MRI scan for multiple patients
+#' Wrapper function to preprocess T1-weighted, T2-weighted and/or FLAIR MRI scan for multiple patients
 #'
-#' This function preprocesses raw T1-w MRI scans and generates a spatially informed MRI scans using the fast algorithm.
-#' The preprocesising steps comprises imhomogeneity correction 'N4', registration to the MNI152 template with isotropic voxel size of 2mm
+#' This function preprocesses raw T1-weighted, T2-weighted and/or FLAIR MRI scans and generates a brain segmentation MRI scans using the FAST algorithm.
+#' The preprocessing steps comprise imhomogeneity correction 'N4', linear coregistration of T2-weighted and/or FLAIR to the T1-weighted, registration of all available modalities to the MNI152 template with an isotropic voxel size of 1mm^3
 #' using the 'SyN' transformation, skull stripping, and RAVEL intensity normalization.
 #'
-#' @param patients.general folder containing folders per patient with raw T1-w images.
+#' @param patients.general general folder containing sub-folders per patient with raw MRI images.
 #' @param clinical.covariates data.frame of covariates associated to the MRI scans. Number of rows should be equal to the number of images.
-#' @return paths of preprocessed MRI scans.
+#' @return paths of preprocessed MRI scans. MRI preprocessed images are stored in the patient's folder.
 #' @importFrom MNITemplate getMNIPath readMNI
 #' @export
 preprocess_patients <- function(patients.folder, clinical.covariates){
