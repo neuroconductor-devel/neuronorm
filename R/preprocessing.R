@@ -1,4 +1,4 @@
-#' Preprocess T1-weighted MRI scan for one patient
+#'@title Preprocess T1-weighted MRI scan for one patient
 #'
 #' This function preprocesses a raw T1-w MRI scan and generates a segmentation MRI scan using the FAST algorithm.
 #' The preprocesising steps comprises imhomogeneity correction 'N4', registration to the MNI152 template with isotropic voxel size of 1mm^3
@@ -264,7 +264,6 @@ preprocess_patients <- function(patients.folder, clinical.covariates){
   }
 
   cat(paste0('--------------------------------------------------\n Preprocessing Complete \n--------------------------------------------------\n\n'))
-
   return(paths_mri)
 }
 
