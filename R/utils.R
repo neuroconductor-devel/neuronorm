@@ -1,8 +1,8 @@
-#' Create a vector of the coregister images based on the images modalities
+#' Creates a vector of the coregistered images based on the available MRI images modalities.
 #'
-#' This function creates a vector of corregistered images for a patient.
-#' The vector contains whether a vector of length one for only one modality (T2 or FLAIR)
-#' or a vector of length two including both modalities (T2 and FLAIR).
+#' This function creates a vector of coregistered T2-weighted and/or FLAIR images for a patient.
+#' The vector contains a vector of length one for only one MRI modality (T2-weighted or FLAIR)
+#' or a vector of length two including both modalities (T2-weighted or FLAIR).
 #'
 #' @param vector output object from the coregistration function.
 #' @export
@@ -16,13 +16,12 @@ coregistration_images <- function(vector){
 }
 
 
-#' Create a vector of bias images based on the images modalities
+#' Creates a vector of inhomogeneity corrected images based on the available MRI images modalities.
 #'
-#' This function creates a vector of bias images for a patient.
-#' The vector contains whether a vector of length one for only one modality (T1)
-#' or a vector of length two/three including all modalities.
+#' This function creates a vector of imhomogeneity corrected images for a patient.
+#' The vector contains a vector of the length of the MRI modalities (T1-weighted, T2-weighted and/or FLAIR).
 #'
-#' @param vector output object from the coregistration function.
+#' @param vector output object from the inhomogeneity correction function.
 #' @export
 create_bias_list <- function (modalities, bias_T1, list_corregister){
   bias_mris <- list()
@@ -39,10 +38,10 @@ create_bias_list <- function (modalities, bias_T1, list_corregister){
 }
 
 
-#' Create a vector with the image modalities in each patient folder
+#' Creates a vector of strings with the MRI modalities (T1-weighted, T2-weighted and/or FLAIR) available in a patient's folder.
 #'
-#' This function creates a vector with the name of the image modalitities fpr a patient.
-#' @param patient paths of MRI scan per patient.
+#' This function creates a vector with the name of the image modalitities for a patient.
+#' @param patient paths of MRI scans per patient.
 #' @export
 get_modalities <- function(patient){
   names <- names(patient)
