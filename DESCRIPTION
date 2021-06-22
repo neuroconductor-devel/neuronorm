@@ -3,8 +3,6 @@ Title: Preprocessing of structural MRI for multiple neurodegenrative diseases.
 Version: 1.0.0
 Author: David Payares, Wiebke Schick, Jorge Mateu
 Maintainer: David Payares <davidpayaresg@gmail.com>
-Depends:
-    R (≥ 3.4)
 Suggests:
     rmarkdown
 Imports:
@@ -25,10 +23,13 @@ Remotes:
     muschellij2/extrantsr
     Jfortin1/MNITemplate
     Jfortin1/RAVEL
-Description: Preprocessing pipeline for normalize and clean T1-weighted, T2-weighted and FLAIR MRI images coming from different sources, diseases, patients, scanners and sites.
+SystemRequirements: 
+    FSL
+Description: Preprocessing pipeline for normalizing and cleaning T1-weighted, T2-weighted and FLAIR MRI images coming from different sources, diseases, patients, scanners and sites.
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 VignetteBuilder: knitr
+FSL: true
