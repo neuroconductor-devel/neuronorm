@@ -12,7 +12,7 @@ Imports:
     neurobase,
     cmaker,
     ITKR,
-    ANTRs,
+    ANTsR,
     extrantsr,
     MNITemplate,
     RAVEL

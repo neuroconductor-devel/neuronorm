@@ -9,14 +9,13 @@ load_mri_patient(folder, modalities = c("T1", "T2", "FLAIR"))
 \arguments{
 \item{folder}{folder containing the MRI scans. The MRI scans should be in format NiFTI.}
 
-\item{modalities}{the MRI modalities to be considered. Should be at least one of T1, T2 or FLAIR. By default, all modalities are searched within the folder.}
+\item{modalities}{string or vector of strings with the MRI modalities to be considered. Should be at least one of T1, T2 or FLAIR. By default, all modalities are searched within the folder.}
 }
 \value{
 paths of MRI scans for a patient if they exist.
 }
 \description{
-This function loads the MRI scans from one patient. It assumes that the MRI
-scans are contained in the same folder and refer to MRI modalities T1, T2, Flair.
-Any scan with duplicated modality keyword will be ommited with the first one being
-kept.
+This function loads the MRI scans from a patient. It assumes that the MRI
+scans are contained in the same folder and refer to MRI modalities T1-weighted, T2-weighted and FLAIR.
+Only the first MRI scan that matched the modalities keywords ('T1','T2' or 'FLAIR') will be kept.
 }

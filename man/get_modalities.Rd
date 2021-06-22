@@ -2,13 +2,13 @@
 % Please edit documentation in R/utils.R
 \name{get_modalities}
 \alias{get_modalities}
-\title{Create a vector with the image modalities in each patient folder}
+\title{Creates a vector of strings with the MRI modalities (T1-weighted, T2-weighted and/or FLAIR) available in a patient's folder.}
 \usage{
 get_modalities(patient)
 }
 \arguments{
-\item{patient}{paths of MRI scan per patient.}
+\item{patient}{paths of MRI scans per patient.}
 }
 \description{
-This function creates a vector with the name of the image modalitities fpr a patient.
+This function creates a vector with the name of the image modalitities for a patient.
 }

@@ -2,7 +2,12 @@
 % Please edit documentation in R/preprocessing.R
 \name{preprocess_modalities}
 \alias{preprocess_modalities}
-\title{Preprocess group of MRI scan for one patient}
+\title{Preprocesses group of MRI scan for one patient
+
+This function preprocesses raw T1-weighted, T2-weighted and FLAIR MRI scans and generates a segmentation MRI scan using the FAST algorithm.
+The preprocesising steps comprises imhomogeneity correction 'N4', coregistration of other sequences to the T1-weighted scan,
+non-linear registration to the MNI152 template with an isotropic voxel size of 1mm,
+using the 'SyN' transformation, skull stripping, brain segmentation and intensity normalization using the RAVEL or White Stripe algorithms.}
 \usage{
 preprocess_modalities(
   mri.patient,
@@ -17,13 +22,13 @@ preprocess_modalities(
 \arguments{
 \item{mri.patient}{path of the MRI scans.}
 
-\item{folder.patient}{folder containing the MRI scan. This folder usually refers as the patient.}
+\item{folder.patient}{folder containing the MRI scans. This folder usually refers to the patient.}
 
-\item{modalities}{vector of modalities to be preprocessed. It must always contains the T1-w sequence scan.}
+\item{modalities}{vector of strings containing the modalities to be preprocessed. It must always contains the T1-weighted sequence scan.}
 
-\item{atlas}{atlas template to spatially register the MRI scans. By default the MNI152 atlas template is used.}
+\item{atlas}{atlas template in NifTI format to spatially register the MRI scans. By default the MNI152 atlas template is used.}
 
-\item{mask}{brain mask of the atlas template to performed the skull stripping.}
+\item{mask}{brain mask in NifTI format of the atlas template to performed the skull stripping.}
 
 \item{inhomogeneity}{inhomogeneity correction algorithm to be applied. The correction by default is the 'N4' bias correction.}
 
@@ -33,8 +38,10 @@ preprocess_modalities(
 paths of preprocessed MRI scans.
 }
 \description{
-This function preprocesses raw T1-w, T2-w and FLAIR MRI scans and generates a segmentation MRI scan using the fast algorithm.'
-The preprocesising steps comprises imhomogeneity correction 'N4', coregistration of other sequences to T1-w,
-registration to the MNI152 template with isotropic voxel size of 1mm,
-using the 'SyN' transformation, skull stripping, brain segmentation and intensity normalization via RAVEL or White Stripe.
+Preprocesses group of MRI scan for one patient
+
+This function preprocesses raw T1-weighted, T2-weighted and FLAIR MRI scans and generates a segmentation MRI scan using the FAST algorithm.
+The preprocesising steps comprises imhomogeneity correction 'N4', coregistration of other sequences to the T1-weighted scan,
+non-linear registration to the MNI152 template with an isotropic voxel size of 1mm,
+using the 'SyN' transformation, skull stripping, brain segmentation and intensity normalization using the RAVEL or White Stripe algorithms.
 }

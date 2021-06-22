@@ -2,7 +2,11 @@
 % Please edit documentation in R/preprocessing.R
 \name{preprocess_modality_t1}
 \alias{preprocess_modality_t1}
-\title{Preprocess T1-w MRI scan for one patient}
+\title{Preprocesses T1-weighted MRI scan for one patient
+
+This function preprocesses a raw T1-w MRI scan and generates a segmentation MRI scan using the FAST algorithm.
+The preprocesising steps comprises imhomogeneity correction 'N4', registration to the MNI152 template with isotropic voxel size of 1mm^3
+using the 'SyN' transformation, and skull stripping.}
 \usage{
 preprocess_modality_t1(
   mri.patient,
@@ -14,13 +18,13 @@ preprocess_modality_t1(
 )
 }
 \arguments{
-\item{mri.patient}{path of the T1-w scan.}
+\item{mri.patient}{path of the T1-weighted scan.}
 
-\item{folder.patient}{folder containing the T1-w scan. This folder usually refers as the patient.}
+\item{folder.patient}{folder containing the T1-weighted scan. This folder usually refers to the patient.}
 
-\item{atlas}{atlas template to spatially register the T1-w scans. By default the MNI152 atlas template is used.}
+\item{atlas}{atlas template in NifTI format to spatially register the T1-weighted scans. By default the MNI152 atlas template is used.}
 
-\item{mask}{brain mask of the atlas template to performed the skull stripping.}
+\item{mask}{brain mask in NifTI format of the atlas template to performed the skull stripping.}
 
 \item{inhomogeneity}{inhomogeneity correction algorithm to be applied. The correction by default is the 'N4' bias correction.}
 
@@ -30,7 +34,9 @@ preprocess_modality_t1(
 paths of preprocessed MRI scans.
 }
 \description{
-This function preprocesses a raw T1-w MRI scan and generates a segmentation MRI scan using the fast algorithm.'
-The preprocesising steps comprises imhomogeneity correction 'N4', registration to the MNI152 template with isotropic voxel size of 1mm
+Preprocesses T1-weighted MRI scan for one patient
+
+This function preprocesses a raw T1-w MRI scan and generates a segmentation MRI scan using the FAST algorithm.
+The preprocesising steps comprises imhomogeneity correction 'N4', registration to the MNI152 template with isotropic voxel size of 1mm^3
 using the 'SyN' transformation, and skull stripping.
 }

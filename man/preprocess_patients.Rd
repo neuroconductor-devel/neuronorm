@@ -2,20 +2,26 @@
 % Please edit documentation in R/preprocessing.R
 \name{preprocess_patients}
 \alias{preprocess_patients}
-\title{Preprocess T1-w MRI scan for multiple patients}
+\title{Wrapper function to preprocess T1-weighted, T2-weighted and/or FLAIR MRI scan for multiple patients
+
+This function preprocesses raw T1-weighted, T2-weighted and/or FLAIR MRI scans and generates a brain segmentation MRI scans using the FAST algorithm.
+The preprocessing steps comprise imhomogeneity correction 'N4', linear coregistration of T2-weighted and/or FLAIR to the T1-weighted, registration of all available modalities to the MNI152 template with an isotropic voxel size of 1mm^3
+using the 'SyN' transformation, skull stripping, and RAVEL intensity normalization.}
 \usage{
 preprocess_patients(patients.folder, clinical.covariates)
 }
 \arguments{
 \item{clinical.covariates}{data.frame of covariates associated to the MRI scans. Number of rows should be equal to the number of images.}
 
-\item{patients.general}{folder containing folders per patient with raw T1-w images.}
+\item{patients.general}{general folder containing sub-folders per patient with raw MRI images.}
 }
 \value{
-paths of preprocessed MRI scans.
+paths of preprocessed MRI scans. MRI preprocessed images are stored in the patient's folder.
 }
 \description{
-This function preprocesses raw T1-w MRI scans and generates a spatially informed MRI scans using the fast algorithm.
-The preprocesising steps comprises imhomogeneity correction 'N4', registration to the MNI152 template with isotropic voxel size of 2mm
+Wrapper function to preprocess T1-weighted, T2-weighted and/or FLAIR MRI scan for multiple patients
+
+This function preprocesses raw T1-weighted, T2-weighted and/or FLAIR MRI scans and generates a brain segmentation MRI scans using the FAST algorithm.
+The preprocessing steps comprise imhomogeneity correction 'N4', linear coregistration of T2-weighted and/or FLAIR to the T1-weighted, registration of all available modalities to the MNI152 template with an isotropic voxel size of 1mm^3
 using the 'SyN' transformation, skull stripping, and RAVEL intensity normalization.
 }

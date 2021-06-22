@@ -17,9 +17,9 @@ load_mri_patient <- function(folder, modalities = c('T1','T2','FLAIR')){
       mri_images[[modality]] <- data[1]
       cat(paste0('-',modality, ' image found\n'))
     }else{
-      c
-  }at(paste0('- *NO* ', modality, ' images found\n'))
+      cat(paste0('- *NO* ', modality, ' images found\n'))
     }
+  }
   return(mri_images)
 }
 

@@ -7,12 +7,12 @@
 load_mri_group(folder)
 }
 \arguments{
-\item{folder}{folder containing the MRI scans.}
+\item{folder}{general folder containing the sub-folders with the MRI scans.}
 }
 \value{
 paths of MRI scans per patient if they exist.
 }
 \description{
-This function loads the MRI scans from multiple patients. It assumes that the patients
-folder with the the MRI scans are contained in a general folder.
+This function loads the MRI scans from multiple patients. It assumes that the patients'
+folders containing the MRI scans are sub-folders of a general folder.
 }

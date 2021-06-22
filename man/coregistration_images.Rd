@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{coregistration_images}
 \alias{coregistration_images}
-\title{Create a vector of the coregister images based on the images modalities}
+\title{Creates a vector of the coregistered images based on the available MRI images modalities.}
 \usage{
 coregistration_images(vector)
 }
@@ -10,7 +10,7 @@ coregistration_images(vector)
 \item{vector}{output object from the coregistration function.}
 }
 \description{
-This function creates a vector of corregistered images for a patient.
-The vector contains whether a vector of length one for only one modality (T2 or FLAIR)
-or a vector of length two including both modalities (T2 and FLAIR).
+This function creates a vector of coregistered T2-weighted and/or FLAIR images for a patient.
+The vector contains a vector of length one for only one MRI modality (T2-weighted or FLAIR)
+or a vector of length two including both modalities (T2-weighted or FLAIR).
 }

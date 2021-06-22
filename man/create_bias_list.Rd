@@ -2,15 +2,14 @@
 % Please edit documentation in R/utils.R
 \name{create_bias_list}
 \alias{create_bias_list}
-\title{Create a vector of bias images based on the images modalities}
+\title{Creates a vector of inhomogeneity corrected images based on the available MRI images modalities.}
 \usage{
 create_bias_list(modalities, bias_T1, list_corregister)
 }
 \arguments{
-\item{vector}{output object from the coregistration function.}
+\item{vector}{output object from the inhomogeneity correction function.}
 }
 \description{
-This function creates a vector of bias images for a patient.
-The vector contains whether a vector of length one for only one modality (T1)
-or a vector of length two/three including all modalities.
+This function creates a vector of imhomogeneity corrected images for a patient.
+The vector contains a vector of the length of the MRI modalities (T1-weighted, T2-weighted and/or FLAIR).
 }
