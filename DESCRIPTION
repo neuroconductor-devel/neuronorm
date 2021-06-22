@@ -3,6 +3,8 @@ Title: Preprocessing of structural MRI for multiple neurodegenrative diseases.
 Version: 1.0.0
 Author: David Payares, Wiebke Schick, Jorge Mateu
 Maintainer: David Payares <davidpayaresg@gmail.com>
+Deppends:
+    R (≥ 3.4)
 Suggests:
     rmarkdown
 Imports:

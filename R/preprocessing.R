@@ -1,6 +1,6 @@
-#'@title Preprocess T1-weighted MRI scan for one patient
+#' @title Preprocesses T1-weighted MRI scan for one patient
 #'
-#' This function preprocesses a raw T1-w MRI scan and generates a segmentation MRI scan using the FAST algorithm.
+#' @description  This function preprocesses a raw T1-w MRI scan and generates a segmentation MRI scan using the FAST algorithm.
 #' The preprocesising steps comprises imhomogeneity correction 'N4', registration to the MNI152 template with isotropic voxel size of 1mm^3
 #' using the 'SyN' transformation, and skull stripping.
 #'
@@ -67,9 +67,9 @@ preprocess_modality_t1 <- function(mri.patient, folder.patient, atlas, mask, inh
 }
 
 
-#' Preprocess group of MRI scan for one patient
+#' @title Preprocesses group of MRI scan for one patient
 #'
-#' This function preprocesses raw T1-weighted, T2-weighted and FLAIR MRI scans and generates a segmentation MRI scan using the FAST algorithm.
+#' @description This function preprocesses raw T1-weighted, T2-weighted and FLAIR MRI scans and generates a segmentation MRI scan using the FAST algorithm.
 #' The preprocesising steps comprises imhomogeneity correction 'N4', coregistration of other sequences to the T1-weighted scan,
 #' non-linear registration to the MNI152 template with an isotropic voxel size of 1mm,
 #' using the 'SyN' transformation, skull stripping, brain segmentation and intensity normalization using the RAVEL or White Stripe algorithms.
@@ -151,9 +151,9 @@ preprocess_modalities <- function(mri.patient, folder.patient, modalities, atlas
 }
 
 
-#' Wrapper function for RAVEL normalization of T1-weighted images
+#' @title Wrapper function for RAVEL normalization of T1-weighted images
 #'
-#' Ravel intensity normalization using control voxels and clinical covariates.
+#' @description Ravel intensity normalization using control voxels and clinical covariates.
 #' @param masked.paths list or vector of paths of the preprocessed input NIfTI images to be normalized.
 #' @param csf.paths NIfTI image paths for the binary control region masks.
 #' @param ravel.paths list or vector of paths of the output NIfTI images.
@@ -180,9 +180,9 @@ image_normalization_ravel <- function(masked.paths, csf.paths, ravel.paths, demo
 }
 
 
-#' Wrapper function to preprocess T1-weighted, T2-weighted and/or FLAIR MRI scan for multiple patients
+#' @title Wrapper function to preprocess T1-weighted, T2-weighted and/or FLAIR MRI scan for multiple patients
 #'
-#' This function preprocesses raw T1-weighted, T2-weighted and/or FLAIR MRI scans and generates a brain segmentation MRI scans using the FAST algorithm.
+#' @description This function preprocesses raw T1-weighted, T2-weighted and/or FLAIR MRI scans and generates a brain segmentation MRI scans using the FAST algorithm.
 #' The preprocessing steps comprise imhomogeneity correction 'N4', linear coregistration of T2-weighted and/or FLAIR to the T1-weighted, registration of all available modalities to the MNI152 template with an isotropic voxel size of 1mm^3
 #' using the 'SyN' transformation, skull stripping, and RAVEL intensity normalization.
 #'
