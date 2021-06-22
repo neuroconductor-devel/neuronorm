@@ -17,11 +17,11 @@ Imports:
     MNITemplate,
     RAVEL
 Remotes:
-    stnava/cmaker
-    stnava/ITKR
-    ANTsX/ANTsR
-    muschellij2/extrantsr
-    Jfortin1/MNITemplate
+    stnava/cmaker,
+    stnava/ITKR,
+    ANTsX/ANTsR,
+    muschellij2/extrantsr,
+    Jfortin1/MNITemplate,
     Jfortin1/RAVEL
 SystemRequirements: 
     FSL
