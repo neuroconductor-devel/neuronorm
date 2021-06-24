@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{get_modalities}
 \alias{get_modalities}
-\title{Creates a vector of strings with the MRI modalities (T1-weighted, T2-weighted and/or FLAIR) available in a patient's folder.}
+\title{Create a vector of strings with the MRI modalities available in a patient's folder.}
 \usage{
 get_modalities(patient)
 }

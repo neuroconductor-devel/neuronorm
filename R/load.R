@@ -1,6 +1,6 @@
-#' Load MRI scans per patient
+#' @title Load MRI scans per patient
 #'
-#' This function loads the MRI scans from a patient. It assumes that the MRI
+#' @description This function loads the MRI scans from a patient. It assumes that the MRI
 #' scans are contained in the same folder and refer to MRI modalities T1-weighted, T2-weighted and FLAIR.
 #' Only the first MRI scan that matched the modalities keywords ('T1','T2' or 'FLAIR') will be kept.
 #'
@@ -24,9 +24,9 @@ load_mri_patient <- function(folder, modalities = c('T1','T2','FLAIR')){
 }
 
 
-#' Load MRI per group or disease
+#' @title Load MRI per group or disease
 #'
-#' This function loads the MRI scans from multiple patients. It assumes that the patients'
+#' @description This function loads the MRI scans from multiple patients. It assumes that the patients'
 #' folders containing the MRI scans are sub-folders of a general folder.
 #'
 #' @param folder general folder containing the sub-folders with the MRI scans.

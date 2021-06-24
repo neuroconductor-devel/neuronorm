@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{create_bias_list}
 \alias{create_bias_list}
-\title{Creates a vector of inhomogeneity corrected images based on the available MRI images modalities.}
+\title{Create a vector of inhomogeneity corrected images based on the available MRI images modalities.}
 \usage{
 create_bias_list(modalities, bias_T1, list_corregister)
 }

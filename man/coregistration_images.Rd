@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{coregistration_images}
 \alias{coregistration_images}
-\title{Creates a vector of the coregistered images based on the available MRI images modalities.}
+\title{Create a vector of the coregistered images based on the available MRI images modalities.}
 \usage{
 coregistration_images(vector)
 }

@@ -2,11 +2,7 @@
 % Please edit documentation in R/preprocessing.R
 \name{preprocess_patients}
 \alias{preprocess_patients}
-\title{Wrapper function to preprocess T1-weighted, T2-weighted and/or FLAIR MRI scan for multiple patients
-
-This function preprocesses raw T1-weighted, T2-weighted and/or FLAIR MRI scans and generates a brain segmentation MRI scans using the FAST algorithm.
-The preprocessing steps comprise imhomogeneity correction 'N4', linear coregistration of T2-weighted and/or FLAIR to the T1-weighted, registration of all available modalities to the MNI152 template with an isotropic voxel size of 1mm^3
-using the 'SyN' transformation, skull stripping, and RAVEL intensity normalization.}
+\title{Preprocess MRI scans for multiple patients}
 \usage{
 preprocess_patients(patients.folder, clinical.covariates)
 }
@@ -19,9 +15,20 @@ preprocess_patients(patients.folder, clinical.covariates)
 paths of preprocessed MRI scans. MRI preprocessed images are stored in the patient's folder.
 }
 \description{
-Wrapper function to preprocess T1-weighted, T2-weighted and/or FLAIR MRI scan for multiple patients
-
 This function preprocesses raw T1-weighted, T2-weighted and/or FLAIR MRI scans and generates a brain segmentation MRI scans using the FAST algorithm.
 The preprocessing steps comprise imhomogeneity correction 'N4', linear coregistration of T2-weighted and/or FLAIR to the T1-weighted, registration of all available modalities to the MNI152 template with an isotropic voxel size of 1mm^3
 using the 'SyN' transformation, skull stripping, and RAVEL intensity normalization.
+}
+\examples{
+# Get general folder
+folder <- system.file("extdata", package = "neuronorm")
+# Get covariates
+covariates <- system.file("covariates.txt", package = "neuronorm")
+# Read covariates information
+clinical_info <- read.csv(file = covariates, sep = ';')
+# Preprocess MRI scans: 'N4' inhomogeneity correction, 'SyN' non-linear transformation to MNI152 atlas template
+# Brain extraction, Spatial informed MRI scan , a.k.a., brain segmentation and RAVEL intensity normalization only for T1-w images.
+paths_preprocess_patients <- preprocess_patients(folder, clinical_info)
+# Outputs paths of the preprocessed MRI scans.
+paths_preprocess_patients$patient02$ravel
 }

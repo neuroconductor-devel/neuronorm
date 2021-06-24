@@ -2,11 +2,7 @@
 % Please edit documentation in R/preprocessing.R
 \name{preprocess_modality_t1}
 \alias{preprocess_modality_t1}
-\title{Preprocesses T1-weighted MRI scan for one patient
-
-This function preprocesses a raw T1-w MRI scan and generates a segmentation MRI scan using the FAST algorithm.
-The preprocesising steps comprises imhomogeneity correction 'N4', registration to the MNI152 template with isotropic voxel size of 1mm^3
-using the 'SyN' transformation, and skull stripping.}
+\title{Preprocess T1-weighted MRI scan for one patient}
 \usage{
 preprocess_modality_t1(
   mri.patient,
@@ -34,8 +30,6 @@ preprocess_modality_t1(
 paths of preprocessed MRI scans.
 }
 \description{
-Preprocesses T1-weighted MRI scan for one patient
-
 This function preprocesses a raw T1-w MRI scan and generates a segmentation MRI scan using the FAST algorithm.
 The preprocesising steps comprises imhomogeneity correction 'N4', registration to the MNI152 template with isotropic voxel size of 1mm^3
 using the 'SyN' transformation, and skull stripping.

@@ -1,6 +1,6 @@
-#' @title Preprocesses T1-weighted MRI scan for one patient
+#' @title Preprocess T1-weighted MRI scan for one patient
 #'
-#' This function preprocesses a raw T1-w MRI scan and generates a segmentation MRI scan using the FAST algorithm.
+#' @description This function preprocesses a raw T1-w MRI scan and generates a segmentation MRI scan using the FAST algorithm.
 #' The preprocesising steps comprises imhomogeneity correction 'N4', registration to the MNI152 template with isotropic voxel size of 1mm^3
 #' using the 'SyN' transformation, and skull stripping.
 #'
@@ -67,9 +67,9 @@ preprocess_modality_t1 <- function(mri.patient, folder.patient, atlas, mask, inh
 }
 
 
-#' @title Preprocesses group of MRI scan for one patient
+#' @title Preprocess group of MRI scan for one patient
 #'
-#' This function preprocesses raw T1-weighted, T2-weighted and FLAIR MRI scans and generates a segmentation MRI scan using the FAST algorithm.
+#' @description This function preprocesses raw T1-weighted, T2-weighted and FLAIR MRI scans and generates a segmentation MRI scan using the FAST algorithm.
 #' The preprocesising steps comprises imhomogeneity correction 'N4', coregistration of other sequences to the T1-weighted scan,
 #' non-linear registration to the MNI152 template with an isotropic voxel size of 1mm,
 #' using the 'SyN' transformation, skull stripping, brain segmentation and intensity normalization using the RAVEL or White Stripe algorithms.
@@ -86,6 +86,23 @@ preprocess_modality_t1 <- function(mri.patient, folder.patient, atlas, mask, inh
 #' @importFrom neurobase mask_img
 #' @importFrom fslr fast
 #' @importFrom oro.nifti writeNIfTI
+#' @examples # Folder of the patient
+#' patient_folder <- file.path(folder,"patient01")
+#' ## Getting the paths of the MRI scan sequences for one patient
+#' ## the NeuroNorm built-in function load_mri_patient() can be used for this.
+#' sequences <- load_mri_patient(patient_folder)
+#' ## Getting preferred atlas template and template mask
+#' ## Using the MNI152 template available in the MNITemplate package
+#' library(MNITemplate)
+#' atlas <- getMNIPath()
+#' atlas_mask <- readMNI("Brain_Mask")
+#'
+#'## Preprocessing the patient's sequences
+#'patient_preprocessed_mri <- preprocess_modalities(mri.patient = sequences,
+#'                                                  folder.patient = patient_folder, modalities = c('T1','T2','FLAIR'),
+#'                                                  atlas = atlas, mask = atlas_mask,
+#'                                                  inhomogeneity = 'N4',
+#'                                                  transformation = 'SyN')
 #' @export
 preprocess_modalities <- function(mri.patient, folder.patient, modalities, atlas, mask, inhomogeneity = "N4", transformation = "SyN"){
 
@@ -130,7 +147,7 @@ preprocess_modalities <- function(mri.patient, folder.patient, modalities, atlas
   # Spatially Informed layer
   cat('*********************************************\n******** Brain Segmentation ***********\n*********************************************\n--Running...\n')
   spatial_file <- file.path(folder.patient, 'T1_spatially_informed.nii.gz')
-  spatial_mri = fslr::fast(file = mask_mri[[1]], outfile = spatial_file, opts = "--nobias", verbose = FALSE, type = 'T1')
+  spatial_mri = fslr::fast(file = mask_mri[[1]], outfile = spatial_file, opts = "--nobias", verbose = FALSE)
   mri_paths[['segmented']] <- file.path(folder.patient, 'T1_spatially_informed_pveseg.nii.gz')
   cat('--Complete.\n')
 
@@ -180,9 +197,9 @@ image_normalization_ravel <- function(masked.paths, csf.paths, ravel.paths, demo
 }
 
 
-#' @title Wrapper function to preprocess T1-weighted, T2-weighted and/or FLAIR MRI scan for multiple patients
+#' @title Preprocess MRI scans for multiple patients
 #'
-#' This function preprocesses raw T1-weighted, T2-weighted and/or FLAIR MRI scans and generates a brain segmentation MRI scans using the FAST algorithm.
+#' @description This function preprocesses raw T1-weighted, T2-weighted and/or FLAIR MRI scans and generates a brain segmentation MRI scans using the FAST algorithm.
 #' The preprocessing steps comprise imhomogeneity correction 'N4', linear coregistration of T2-weighted and/or FLAIR to the T1-weighted, registration of all available modalities to the MNI152 template with an isotropic voxel size of 1mm^3
 #' using the 'SyN' transformation, skull stripping, and RAVEL intensity normalization.
 #'
@@ -190,6 +207,17 @@ image_normalization_ravel <- function(masked.paths, csf.paths, ravel.paths, demo
 #' @param clinical.covariates data.frame of covariates associated to the MRI scans. Number of rows should be equal to the number of images.
 #' @return paths of preprocessed MRI scans. MRI preprocessed images are stored in the patient's folder.
 #' @importFrom MNITemplate getMNIPath readMNI
+#' @examples # Get general folder
+#' folder <- system.file("extdata", package = "neuronorm")
+#' # Get covariates
+#' covariates <- system.file("covariates.txt", package = "neuronorm")
+#' # Read covariates information
+#' clinical_info <- read.csv(file = covariates, sep = ';')
+#' # Preprocess MRI scans: 'N4' inhomogeneity correction, 'SyN' non-linear transformation to MNI152 atlas template
+#' # Brain extraction, Spatial informed MRI scan , a.k.a., brain segmentation and RAVEL intensity normalization only for T1-w images.
+#' paths_preprocess_patients <- preprocess_patients(folder, clinical_info)
+#' # Outputs paths of the preprocessed MRI scans.
+#' paths_preprocess_patients$patient02$ravel
 #' @export
 preprocess_patients <- function(patients.folder, clinical.covariates){
 
@@ -239,8 +267,12 @@ preprocess_patients <- function(patients.folder, clinical.covariates){
   ## Group paths for ravel
   ravel_paths <- lapply(paths_mri, function(x){x$ravel})
   csf_paths <- lapply(paths_mri, function(x){x$csf_mask})
-  masked_paths <- lapply(paths_mri, function(x){x$syn_masked})
+  masked_paths <- lapply(paths_mri, function(x){x$stripped})
   masked_paths_T1 <- lapply(masked_paths, function(x) x[grepl("T1", x)])
+
+  print(ravel_paths)
+  print(csf_paths)
+  print(masked_paths_T1)
 
 
   if(missing(clinical.covariates)) {

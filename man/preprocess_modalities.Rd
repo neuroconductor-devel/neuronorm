@@ -2,12 +2,7 @@
 % Please edit documentation in R/preprocessing.R
 \name{preprocess_modalities}
 \alias{preprocess_modalities}
-\title{Preprocesses group of MRI scan for one patient
-
-This function preprocesses raw T1-weighted, T2-weighted and FLAIR MRI scans and generates a segmentation MRI scan using the FAST algorithm.
-The preprocesising steps comprises imhomogeneity correction 'N4', coregistration of other sequences to the T1-weighted scan,
-non-linear registration to the MNI152 template with an isotropic voxel size of 1mm,
-using the 'SyN' transformation, skull stripping, brain segmentation and intensity normalization using the RAVEL or White Stripe algorithms.}
+\title{Preprocess group of MRI scan for one patient}
 \usage{
 preprocess_modalities(
   mri.patient,
@@ -38,10 +33,27 @@ preprocess_modalities(
 paths of preprocessed MRI scans.
 }
 \description{
-Preprocesses group of MRI scan for one patient
-
 This function preprocesses raw T1-weighted, T2-weighted and FLAIR MRI scans and generates a segmentation MRI scan using the FAST algorithm.
 The preprocesising steps comprises imhomogeneity correction 'N4', coregistration of other sequences to the T1-weighted scan,
 non-linear registration to the MNI152 template with an isotropic voxel size of 1mm,
 using the 'SyN' transformation, skull stripping, brain segmentation and intensity normalization using the RAVEL or White Stripe algorithms.
+}
+\examples{
+# Folder of the patient
+patient_folder <- file.path(folder,"patient01")
+## Getting the paths of the MRI scan sequences for one patient
+## the NeuroNorm built-in function load_mri_patient() can be used for this.
+sequences <- load_mri_patient(patient_folder)
+## Getting preferred atlas template and template mask
+## Using the MNI152 template available in the MNITemplate package
+library(MNITemplate)
+atlas <- getMNIPath()
+atlas_mask <- readMNI("Brain_Mask")
+
+## Preprocessing the patient's sequences
+patient_preprocessed_mri <- preprocess_modalities(mri.patient = sequences,
+                                                 folder.patient = patient_folder, modalities = c('T1','T2','FLAIR'),
+                                                 atlas = atlas, mask = atlas_mask,
+                                                 inhomogeneity = 'N4',
+                                                 transformation = 'SyN')
 }
