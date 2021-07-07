@@ -1,30 +1,26 @@
 Package: neuronorm
-Title: Preprocessing of structural MRI for multiple neurodegenrative diseases.
+Title: Preprocessing of Structural MRI for Multiple Neurodegenerative Diseases.
 Version: 1.0.0
 Author: David Payares, Wiebke Schick, Jorge Mateu
 Maintainer: David Payares <davidpayaresg@gmail.com>
 Suggests:
-    rmarkdown
+    rmarkdown,
+    ANTsR,
+    ANTsRCore,
+    ITKR,
+    extrantsr,
+    MNITemplate,
+    RAVEL
 Imports:
     knitr,
     oro.nifti,
     fslr,
-    neurobase,
-    cmaker,
-    ITKR,
-    ANTsR,
-    extrantsr,
-    MNITemplate,
-    RAVEL
-Remotes:
-    stnava/cmaker,
-    stnava/ITKR,
-    ANTsX/ANTsR,
-    muschellij2/extrantsr,
-    Jfortin1/MNITemplate,
-    Jfortin1/RAVEL
+    neurobase
+Depends:
+    R (>= 3.5)
 SystemRequirements: 
     FSL
+Additional_repositories: https://davidpayares.github.io/drat
 Description: Preprocessing pipeline for normalizing and cleaning T1-weighted, T2-weighted and FLAIR MRI images coming from different sources, diseases, patients, scanners and sites.
 License: GPL-2
 Encoding: UTF-8
