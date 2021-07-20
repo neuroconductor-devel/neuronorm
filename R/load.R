@@ -15,9 +15,9 @@ load_mri_patient <- function(folder, modalities = c('T1','T2','FLAIR')){
     data <- list.files(folder, pattern = modality, full.names = TRUE)
     if (length(data) > 0){
       mri_images[[modality]] <- data[1]
-      cat(paste0('-',modality, ' image found\n'))
+      message(paste0('-',modality, ' image found\n'))
     }else{
-      cat(paste0('- *NO* ', modality, ' images found\n'))
+      warning(paste0('- *NO* ', modality, ' images found\n'))
     }
   }
   return(mri_images)
@@ -35,7 +35,7 @@ load_mri_patient <- function(folder, modalities = c('T1','T2','FLAIR')){
 load_mri_group <- function(folder){
   folders <- list.dirs(folder, full.names = TRUE, recursive = FALSE)
   mri_images <- list()
-  cat('--------------------------------------------------\n')
+  message('--------------------------------------------------\n')
   for (fold in folders){
     fold_name = unlist(strsplit(fold, '/'))
     fold_name = fold_name[length(fold_name)]
@@ -48,6 +48,6 @@ load_mri_group <- function(folder){
   if(length(mri_images) == 0){
     stop("MRI scans must be provided.")
   }
-  cat('--------------------------------------------------\n')
+  message('--------------------------------------------------\n')
   return(mri_images)
 }

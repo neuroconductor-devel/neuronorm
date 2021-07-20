@@ -2,12 +2,15 @@
 % Please edit documentation in R/utils.R
 \name{coregistration_images}
 \alias{coregistration_images}
-\title{Create a vector of the coregistered images based on the available MRI images modalities.}
+\title{Create a vector of the corregistered images based on the available MRI images modalities.}
 \usage{
 coregistration_images(vector)
 }
 \arguments{
 \item{vector}{output object from the coregistration function.}
+}
+\value{
+vector of coregistered images based on modalities available.
 }
 \description{
 This function creates a vector of coregistered T2-weighted and/or FLAIR images for a patient.

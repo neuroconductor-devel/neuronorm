@@ -1,8 +1,33 @@
 Package: neuronorm
-Title: Preprocessing of Structural MRI for Multiple Neurodegenerative Diseases.
+Title: Preprocessing of Structural MRI for Multiple Neurodegenerative Diseases
 Version: 1.0.0
-Author: David Payares, Wiebke Schick, Jorge Mateu
+Authors@R: c(person(given = "David", family = "Payares", email = "davidpayaresg@gmail.com", role = c("aut", "cre")), 
+            person(given = "Jorge", family = "Mateu", email = "mateu@mat.uji.es", role = "ctb"),
+            person(given = "Wiebke",family = "Schick",email = "schickw@uni-muenster.com", role = "ctb"),
+            person(c("Nicholas J."), "Tustison", role = "cph", email = "NA"),
+            person(c("Brian B"), "Avants", role = "cph", email = "NA"),
+            person(c("Philip A."), "Cook", role = "cph", email = "NA"),
+            person(c("Yuanjie"), "Zheng", role = "cph", email = "NA"),
+            person(c("Alexander"), "Egan", role = "cph", email = "NA"),
+            person(c("Paul A."), "Yushkevich", role = "cph", email = "NA"),
+            person(c("James C."), "Gee", role = "cph", email = "NA"),
+            person(c("M."), "Grossman", role = "cph", email = "NA"),
+            person(c("Jean-Philippe"), "Fortin", role = "cph", email = "NA"),
+            person(c("Elizabeth M."), "Sweeney", role = "cph", email = "NA"),
+            person(c("John"), "Muschelli", role = "cph", email = "NA"),
+            person(c("Ciprian M."), "Crainiceanu", role = "cph", email = "NA"),
+            person(c("Russell T."), "Shinohara", role = "cph", email = "NA"),
+            person(c("Yongyue "), "Zhang", role = "cph", email = "NA"),
+            person(c("J. Michae"), "Brady", role = "cph", email = "NA"),
+            person(c("Stephen"), "Smith", role = "cph", email = "NA")
+           )
 Maintainer: David Payares <davidpayaresg@gmail.com>
+Imports:
+    knitr,
+    oro.nifti,
+    fslr,
+    neurobase,
+    stats
 Suggests:
     rmarkdown,
     ANTsR,
@@ -10,22 +35,16 @@ Suggests:
     ITKR,
     extrantsr,
     MNITemplate,
-    RAVEL
-Imports:
-    knitr,
-    oro.nifti,
-    fslr,
-    neurobase
+    RAVEL,
+    neurodata
 Depends:
     R (>= 3.5)
-SystemRequirements: 
-    FSL
 Additional_repositories: https://davidpayares.github.io/drat
 Description: Preprocessing pipeline for normalizing and cleaning T1-weighted, T2-weighted and FLAIR MRI images coming from different sources, diseases, patients, scanners and sites.
 License: GPL-2
 Encoding: UTF-8
-LazyData: true
+SystemRequirements: cmake, FSL
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 VignetteBuilder: knitr
-FSL: true
+OS_type: unix

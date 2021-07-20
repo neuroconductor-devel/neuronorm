@@ -9,6 +9,9 @@ get_modalities(patient)
 \arguments{
 \item{patient}{paths of MRI scans per patient.}
 }
+\value{
+vector of strings containing the modalities available for a patient.
+}
 \description{
 This function creates a vector with the name of the image modalitities for a patient.
 }

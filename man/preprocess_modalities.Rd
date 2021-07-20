@@ -33,27 +33,60 @@ preprocess_modalities(
 paths of preprocessed MRI scans.
 }
 \description{
-This function preprocesses raw T1-weighted, T2-weighted and FLAIR MRI scans and generates a segmentation MRI scan using the FAST algorithm.
-The preprocesising steps comprises imhomogeneity correction 'N4', coregistration of other sequences to the T1-weighted scan,
-non-linear registration to the MNI152 template with an isotropic voxel size of 1mm,
-using the 'SyN' transformation, skull stripping, brain segmentation and intensity normalization using the RAVEL or White Stripe algorithms.
+This function preprocesses raw T1-weighted, T2-weighted and
+FLAIR MRI scans and generates a segmentation MRI scan using the FAST algorithm.
+The preprocesising steps comprises imhomogeneity correction 'N4', coregistration
+of other sequences to the T1-weighted scan, non-linear registration to the MNI152
+template with an isotropic voxel size of 1mm, using the 'SyN' transformation,
+skull stripping, brain segmentation and intensity normalization using the RAVEL
+or White Stripe algorithms.
 }
 \examples{
+
+\dontrun{
+# Get general folder
+folder <- system.file("extdata", package = "neurodata")
+# Get covariates
+covariates <- system.file("covariates.txt", package = "neurodata")
+# Read covariates information
+clinical_info <- read.csv(file = covariates, sep = ';')
+
 # Folder of the patient
 patient_folder <- file.path(folder,"patient01")
-## Getting the paths of the MRI scan sequences for one patient
-## the NeuroNorm built-in function load_mri_patient() can be used for this.
+
+# Getting the paths of the MRI scan sequences for one patient
+# the NeuroNorm built-in function load_mri_patient() can be used for this.
 sequences <- load_mri_patient(patient_folder)
-## Getting preferred atlas template and template mask
-## Using the MNI152 template available in the MNITemplate package
+
+# Getting preferred atlas template and template mask
+# Using the MNI152 template available in the MNITemplate package
 library(MNITemplate)
 atlas <- getMNIPath()
 atlas_mask <- readMNI("Brain_Mask")
 
-## Preprocessing the patient's sequences
+# Preprocessing the patient's sequences
 patient_preprocessed_mri <- preprocess_modalities(mri.patient = sequences,
-                                                 folder.patient = patient_folder, modalities = c('T1','T2','FLAIR'),
-                                                 atlas = atlas, mask = atlas_mask,
-                                                 inhomogeneity = 'N4',
-                                                 transformation = 'SyN')
+                                                  folder.patient = patient_folder,
+                                                  modalities = c('T1','T2','FLAIR'),
+                                                  atlas = atlas, mask = atlas_mask,
+                                                  inhomogeneity = 'N4',
+                                                  transformation = 'SyN')
+
+
+}
+
+}
+\references{
+Nicholas J. Tustison, Brian B. Avants, Philip A. Cook, Yuanjie Zheng, Alexander Egan, Paul A. Yushkevich, and James C. Gee. N4ITK: Improved N3 Bias Correction. IEEE Trans Med Imaging, 29:1310–1320, 2010.
+
+B. B. Avants, C. L. Epstein, M Grossman, J. C. Gee Symmetric diffeomorphic image registration with cross-correlation: evaluating automated labeling of elderly and neurodegenerative brain. Medical Image Analysis, 12:1310–1320, 2008.
+
+Evans, A.C., Fox, P.T., Lancaster, J., Zilles, K., Woods, R., Paus, T., Simpson, G., Pike, B., Holmes, C., Collins, D.L., Thompson, P., MacDonald, D., Iacoboni, et al. A probabilistic atlas and reference system for the human brain: International Consortium for Brain Mapping (ICBM). Philos. Trans. R. Soc. London B Biol, 356:1293-1322, 2001.
+
+Yongyue Zhang, J. Michael Brady, Stephen Smith Hidden Markov random field model for segmentation of brain MR image. Medical Imaging 2000: Image Processing, 2000.
+
+Jean-Philippe Fortin, Elizabeth M Sweeney, John Muschelli, Ciprian M Crainiceanu, Russell T Shinohara, Alzheimer’s Disease Neuroimaging Initiative, et al. Removing inter-subject technical variability in magnetic resonance imaging studies. NeuroImage, 132:198–212, 2016.
+}
+\author{
+David Payares
 }

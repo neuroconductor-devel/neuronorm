@@ -7,7 +7,14 @@
 create_bias_list(modalities, bias_T1, list_corregister)
 }
 \arguments{
-\item{vector}{output object from the inhomogeneity correction function.}
+\item{modalities}{vector of strings containing the modalities to be preprocessed. It must always contains the T1-weighted sequence scan.}
+
+\item{bias_T1}{bias image in NifTI format.}
+
+\item{list_corregister}{list of paths of corregisted images.}
+}
+\value{
+vector of inhomogeneity corrected images based on modalities available.
 }
 \description{
 This function creates a vector of imhomogeneity corrected images for a patient.

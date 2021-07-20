@@ -23,13 +23,54 @@ image_normalization_ravel(
 
 \item{demographics}{table of covariates associated to the MRI scans. Number of rows should be equal to the number of images.}
 
+\item{brain.mask}{NIfTI image path for the binary brain mask. Must have value 1 for the brain tissue and 0 otherwise.}
+
 \item{patients.folder}{folder to save the output control mask.}
 
-\item{brain_mask}{NIfTI image path for the binary brain mask. Must have value 1 for the brain tissue and 0 otherwise.}
+\item{modality}{string describing the modality to perform the normalization. It should be one of T1, T2 or FLAIR.}
 }
 \value{
 RAVEL-corrected images are saved in disk.
 }
 \description{
 Ravel intensity normalization using control voxels and clinical covariates.
+}
+\examples{
+
+\dontrun{
+# Get general folder
+folder <- system.file("extdata", package = "neurodata")
+# Get covariates
+covariates <- system.file("covariates.txt", package = "neurodata")
+# Read covariates information
+clinical_info <- read.csv(file = covariates, sep = ';')
+
+# Defining the RAVEL output files for the patients
+# with a T2-weighted sequence (patient 1,2 and 4)
+patients <- c(1,2,4)
+output_files <- lapply(patients, function(x) {
+           file.path(folder, paste0("patient0",x),"T2_ravel.nii.gz")})
+
+# Getting the files of the preprocessed images (without intensity normalization)
+# and the CSF masks computed by the preprocessing.
+csf_paths <- lapply(paths_preprocess_patients[patients], function(x){x$csf_mask})
+masked_paths <- lapply(paths_preprocess_patients[patients], function(x){x$stripped[2]})
+
+Subseting covariares info
+cov_pat <- clinical_info[clinical_info$patient \%in\% patients,]
+
+Normalizing T2 sequences with RAVEL
+image_normalization_ravel(masked.paths = masked_paths, csf.paths = csf_paths,
+                         ravel.paths = output_files, demographics = cov_pat,
+                         brain.mask = atlas_mask, patients.folder = folder,
+                         modality = "T2")
+
+}
+
+}
+\references{
+Jean-Philippe Fortin, Elizabeth M Sweeney, John Muschelli, Ciprian M Crainiceanu, Russell T Shinohara, Alzheimer’s Disease Neuroimaging Initiative, et al. Removing inter-subject technical variability in magnetic resonance imaging studies. NeuroImage, 132:198–212, 2016.
+}
+\author{
+David Payares
 }
