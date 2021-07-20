@@ -1,34 +1,44 @@
 
 # NeuroNorm <img src="img/neuro_sticker.png" align="right" width="160" />
 
-NeuroNorm is an R package to preprocess structural magnetic resonance imaging (MRI) from multiple patients, diseases, scanners, and sites. NeuroNorm transforms multiple raw T1-w, T2-w and FLAIR images in the NIfTI format into preprocessed images comparable across patients, sites, and diseases. Neuronorm performs inhomogeneity correction, spatial registration to a template, skull stripping, spatially informed MRI scan (brain segmentation) generation, intensity normalization, and intensity adjustment. NeuroNorm comes up as a standard procedure to compare and analyze multiple MRI scans of different braimn disorders.
+NeuroNorm is an R package to preprocess structural magnetic resonance imaging (MRI) from multiple patients, diseases, scanners, and sites. NeuroNorm transforms multiple raw T1-w, T2-w and FLAIR images in the NIfTI format into preprocessed images comparable across patients, sites, and diseases. Neuronorm performs inhomogeneity correction, spatial registration to a template, skull stripping, spatially informed MRI scan (brain segmentation) generation, intensity normalization, and intensity adjustment. NeuroNorm comes up as a standard procedure to compare and analyze multiple MRI scans of different brain disorders.
 
-This package is an extension of the master thesis **Detection and Classification of Neurodegenerative Diseases: A Spatially Informed Bayesian neural Network** which conducts a population-level analysis ofpatients with neurodegenerative diseases.
+This package is an extension of the master thesis **Detection and Classification of Neurodegenerative Diseases: A Spatially Informed Bayesian neural Network** which conducts a population-level analysis of patients with neurodegenerative diseases.
 
 ## Background
 
 After the acquisition of an MRI scan, due to the nature of its data, it needs to be processed before any statistical analysis, especially if the study involves multiple sources, multiple scans, and/or multiple subjects. The collection of transformations from the data is called imaging preprocessing. There are numerous steps in imaging preprocessing commonly used to reduce noise, adjust and standardize the data. The steps' order and relevance depend on the study aim and the neurologist criteria. 
 
-The `NeuroNorm` package presents a preprocessing pipeline to transform raw images to images ready for any statistical analysis. First, the `NeuroNorm` package performs inhomogeneity correction using the N4 correction. Then it applies a non-linear registration to the MNI152 template using a diffeomorphism algorithm. It also only extracts the brain tissue using a brain mask derivated from the MNI atlas. The brain extraction is followed by a brain segmentation using Hidden Markov Random Fields (HMRF). The segmented image is considered as a spatially informed scan given the HMRF model properties. A control voxel mask image is obtained for applying the RAVEL intensity normalization. Finally, the intensities are normalized by using the RAVEL algorithm.
+The `NeuroNorm` package presents a preprocessing pipeline to transform raw images to images ready for any statistical analysis. First, the `NeuroNorm` package performs inhomogeneity correction using the N4 correction. Then it applies a non-linear registration to the MNI152 template using a diffeomorphism algorithm. It also only extracts the brain tissue using a brain mask derivated from the MNI atlas. The brain extraction is followed by a brain segmentation using Hidden Markov Random Fields (HMRF). The segmented image is considered a spatially informed scan given the HMRF model properties. A control voxel mask image is obtained for applying the RAVEL intensity normalization. Finally, the intensities are normalized by using the RAVEL algorithm.
 
-The methods and algorithms selected of `NeuroNorm` are state-of.the-art methods in the literature of brain imaging of neurodegeneration. `NeuroNorm` proposes a straightforward and simple preprocessing pipeline for integrating images from numerous neurodegenerative processes. 
+The methods and algorithms selected of `NeuroNorm` are state-of.the-art methods in the literature of brain imaging of neurodegeneration. `NeuroNorm` proposes a straightforward and simple preprocessing pipeline for integrating images from numerous neurodegenerative processes. 
 
 
 ## Installation
 
-You can install NeuroNorm from github using `devtools`.
+`Neuronorm` is now available on [CRAN!](https://cran.r-project.org/web/packages/neuronorm/index.html).
+You can install it directly from R.
+
+``` r
+install.packages("neuronorm")
+```
+
+Or you can install it from github using `devtools`.
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("DavidPayares/neuronorm@main")
 ```
 
-`NeuroNorm` relies on many neuroimaging packages: `fslr`, `ANTsr`,  `extrantsr`, `MNITemplate` and `RAVEL`.
+`NeuroNorm` relies on many neuroimaging packages: `fslr`, `ANTsr`, `ITKR`, `extrantsr`, `MNITemplate` and `RAVEL`.
 The package `fslr` is available on CRAN, and requires FSL to be installed on
 your machine; see the [FSL website](http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/) for installation. 
-For `ANTsR`,`extrantsr` and `RAVEL`, it is recommended to install the latest stable version available at the [ANTsR](https://github.com/stnava/ANTsR/releases/), 
-[extrantsr](https://github.com/muschellij2/extrantsr/releases/) and [RAVEL](https://github.com/Jfortin1/RAVEL) GitHub pages, respectively. 
+For `ANTsR`, `ITKR`, `extrantsr` and `RAVEL`, it is recommended to install the latest stable versionS available at the [ANTsR](https://github.com/stnava/ANTsR/releases/), [ITKR](https://github.com/stnava/ITKR), [extrantsr](https://github.com/muschellij2/extrantsr/releases/) and [RAVEL](https://github.com/Jfortin1/RAVEL) GitHub pages, respectively. 
 For the template space, the MNI152 atlas with an isomorphic voxel size of 1mm is used. It is included in the `MNITemplate` package, available on GitHub at <https://github.com/Jfortin1/MNITemplate>. 
+
+You can also install all the stable and compatible versions of the packages directly from [this](https://github.com/DavidPayares/drat) repository (Recommended).
+
+***`NeuroNorm` is only available for Linux OS***
 
 ## Usage
 
@@ -55,16 +65,17 @@ Currently, `NeuroNorm` only supports T1-w, T2-w and FLAIR sequence scans. Howeve
 
 ### Data Loading
 
-`NeuroNorm` only requires two parameters. The first one refers to the folder containing the data (see Data structure). The second parameter corresponds to the covariates of interest needed to perform the RAVEL intensity normalization. Covariates should be associated with the patient's scans. The `NeuroNorm` package comes with sample data including images, covariates, and folder structure.
+`NeuroNorm` only requires two parameters. The first one refers to the folder containing the data (see Data structure). The second parameter corresponds to the covariates of interest needed to perform the RAVEL intensity normalization. Covariates should be associated with the patient's scans. The `NeuroNorm` package does not comes with sample data. However, `NeuroData` an additioanl package located [here](https://github.com/DavidPayares/drat) includes images, covariates, and folder structure. Make sure you installed `NeuroData` to reproduce the following examples.
 
 ```r
 
 library('neuronorm')
+library('neurodata')
 
 # Get folder with patients' folders
-folder <- system.file("extdata", package = "neuronorm")
+folder <- system.file("extdata", package = "neurodata")
 # Get clinical covariates for RAVEL normalization
-covariates <- system.file("covariates.txt", package = "neuronorm")
+covariates <- system.file("covariates.txt", package = "neurodata")
 # Read covariates information
 clinical_info <- read.csv(file = covariates, sep = ';')
 
@@ -109,7 +120,7 @@ To visualize the image, the `orthographic` function from the `oro.nifti` package
 
 </p>
 
-Reproducible script and sample data can be found in the [inst folder](https://github.com/DavidPayares/neuronorm/tree/main/inst).
+Reproducible script and sample data can be found in the [example folder](https://github.com/DavidPayares/neuronorm/tree/main/example) or in the documentation of `NeuroNorm`available on [CRAN](https://cran.r-project.org/web/packages/neuronorm/neuronorm.pdf).
 
 ## References
 
