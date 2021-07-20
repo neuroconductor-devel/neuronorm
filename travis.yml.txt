@@ -1,0 +1,7 @@
+# Sample .travis.yml for R projects
+
+language: r
+bioc_required: yes
+warnings_are_errors: true
+
+r_check_args: --as-cran
