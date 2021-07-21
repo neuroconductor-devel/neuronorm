@@ -1,6 +1,7 @@
 
 # NeuroNorm <img src="img/neuro_sticker.png" align="right" width="160" /> 
 
+[![R-CMD-check](https://github.com/DavidPayares/neuronorm/workflows/R-CMD-check/badge.svg)](https://github.com/DavidPayares/neuronorm/actions)
 [![Build Status](https://travis-ci.com/DavidPayares/neuronorm.svg?branch=main)](https://travis-ci.com/DavidPayares/neuronorm)
 [![](https://www.r-pkg.org/badges/version/neuronorm?color=blue)](https://cran.r-project.org/package=neuronorm)
 
