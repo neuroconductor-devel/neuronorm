@@ -31,7 +31,6 @@ Imports:
 Suggests:
     rmarkdown,
     ANTsR,
-    ANTsRCore,
     ITKR,
     extrantsr,
     MNITemplate,
