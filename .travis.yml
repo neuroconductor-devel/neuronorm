@@ -6,6 +6,8 @@ warnings_are_errors: true
 
 r_check_args: --as-cran
 
+bioc_required: true
+
 r_github_packages:
   - r-lib/covr
 
