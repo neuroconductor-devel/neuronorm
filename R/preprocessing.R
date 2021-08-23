@@ -168,7 +168,7 @@ preprocess_modalities <- function(mri.patient, folder.patient, modalities, atlas
   # Inhomogeneity Correction: N4
   message(paste0('*********************************************\n****** Inhomogeneity Correction: ', inhomogeneity ,' *********\n*********************************************\n--Running...\n'))
   bias_files <- lapply(modalities, function(x) file.path(folder.patient, paste0( x, '_bias.nii.gz')))
-  bias_mri <- mapply(extrantsr::bias_correct, file = mri.patient, correction = inhomogeneity, outfile = bias_files, verbose = FALSE)
+  bias_mri <- mapply(extrantsr::bias_correct, file = mri.patient, correction = inhomogeneity, outfile = bias_files, verbose = FALSE, SIMPLIFY = TRUE)
   mri_paths[['bias']]<- bias_files
   message('--Complete.\n')
 
