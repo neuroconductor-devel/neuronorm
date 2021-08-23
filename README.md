@@ -89,7 +89,7 @@ clinical_info <- read.csv(file = covariates, sep = ';')
 
 ### Preprocessing 
 
-The function `preprocess_patients` takes as input the folder containing the raw images and the covariates variable, applies the preprocessing pipeline to the input images, and creates preprocessed images for each process.
+The function `preprocess_patients` takes as input the folder containing the raw images and the patients' covariates, applies the preprocessing pipeline to the input images, and creates preprocessed images for each process.
 
 | Parameter            | Description                                                                                                                               |
 | ---------------------| ----------------------------------------------------------------------------------------------------------------------------------------- |
