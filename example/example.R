@@ -29,9 +29,8 @@ paths_preprocess_patients$patient02$ravel
 
 require('oro.nifti')
 # visualize a preprocessed MRI scan for a patient.
-img <- readNIfTI(file.path(paths_preprocess_patients$patient02$syn_masked[[1]]))
-orthographic(img)
-
+img <- readNIfTI(file.path(paths_preprocess_patients$patient02$registered[1]))
+orthographic(img, reorient = F)
 
 ## -------------------- Preprocessing for one patient -----------------------------------
 
