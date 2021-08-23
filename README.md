@@ -70,7 +70,7 @@ Currently, `NeuroNorm` only supports T1-w, T2-w and FLAIR sequence scans. Howeve
 
 ### Data Loading
 
-`NeuroNorm` only requires two parameters. The first one refers to the folder containing the data (see Data structure). The second parameter corresponds to the covariates of interest needed to perform the RAVEL intensity normalization. Covariates should be associated with the patient's scans. The `NeuroNorm` package does not comes with sample data. However, `NeuroData` an additioanl package located [here](https://github.com/DavidPayares/drat) includes images, covariates, and folder structure. Make sure you installed `NeuroData` to reproduce the following examples.
+`NeuroNorm` only requires two parameters. The first one refers to the folder containing the data (see Data structure). The second parameter corresponds to the covariates of interest needed to perform the RAVEL intensity normalization. Covariates should be associated with the patient's scans. The `NeuroNorm` package does not comes with sample data. However, `NeuroData` an additional package located [here](https://github.com/DavidPayares/drat) includes NifTI images, covariates, and folder structure. Make sure you installed `NeuroData` to reproduce the following examples.
 
 ```r
 
