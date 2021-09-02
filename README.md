@@ -20,7 +20,7 @@ The methods and algorithms selected of `NeuroNorm` are state-of-the-art methods 
 
 <p align="center">
 
-<img src="img/flow.png" width="600"/>
+<img src="img/flow.png" width="1000"/>
 
 </p>
 
