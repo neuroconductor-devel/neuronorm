@@ -16,7 +16,14 @@ After acquiring an MRI scan, due to the nature of its data, it needs to be proce
 
 The `NeuroNorm` package presents a preprocessing pipeline to transform raw images into images ready for statistical analysis. First, the `NeuroNorm` package performs inhomogeneity correction using the N4 correction. Then it applies a non-linear registration to the MNI152 template using a diffeomorphism algorithm. It also only extracts the brain tissue using a brain mask derivated from the MNI atlas. The brain extraction is followed by a brain segmentation using Hidden Markov Random Fields (HMRF). The segmented image is considered a spatially informed scan given the HMRF model properties. A control voxel mask image is obtained for applying the RAVEL intensity normalization. Finally, the intensities are normalized by using the RAVEL algorithm.
 
-The methods and algorithms selected of `NeuroNorm` are state-of-the-art methods in the brain imaging literature of neurodegeneration. `NeuroNorm` proposes a straightforward preprocessing pipeline for integrating images from numerous neurodegenerative processes. 
+The methods and algorithms selected of `NeuroNorm` are state-of-the-art methods in the brain imaging literature of neurodegeneration. `NeuroNorm` proposes a straightforward preprocessing pipeline for integrating images from numerous neurodegenerative processes.
+
+<p align="center">
+
+<img src="img/flow.png" width="600"/>
+
+</p>
+
 
 
 ## Installation
