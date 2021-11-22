@@ -2,7 +2,7 @@
 # NeuroNorm <img src="img/neuro_sticker.png" align="right" width="160" /> 
 
 [![R-CMD-check](https://github.com/DavidPayares/neuronorm/workflows/R-CMD-check/badge.svg)](https://github.com/DavidPayares/neuronorm/actions)
-[![Build Status](https://travis-ci.com/DavidPayares/neuronorm.svg?branch=main)](https://travis-ci.com/DavidPayares/neuronorm)
+[![Build Status](https://travis-ci.com/DavidPayares/neuronorm.svg?branch=main)](https://www.travis-ci.com/DavidPayares/neuronorm)
 [![](https://www.r-pkg.org/badges/version/neuronorm?color=blue)](https://cran.r-project.org/package=neuronorm)
 
 
@@ -28,7 +28,7 @@ The methods and algorithms selected of `NeuroNorm` are state-of-the-art methods 
 
 ## Installation
 
-`Neuronorm` is now available on [CRAN!](https://cran.r-project.org/web/packages/neuronorm/index.html).
+`Neuronorm` is now available on [CRAN!](https://CRAN.R-project.org/package=neuronorm).
 You can install it directly from R.
 
 ``` r
@@ -45,7 +45,7 @@ devtools::install_github("DavidPayares/neuronorm@main")
 `NeuroNorm` relies on many neuroimaging packages: `fslr`, `ANTsr`, `ITKR`, `extrantsr`, `MNITemplate` and `RAVEL`.
 The package `fslr` is available on CRAN, and requires FSL to be installed on
 your machine; see the [FSL website](http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/) for installation. 
-For `ANTsR`, `ITKR`, `extrantsr` and `RAVEL`, it is recommended to install the latest stable versionS available at the [ANTsR](https://github.com/stnava/ANTsR/releases/), [ITKR](https://github.com/stnava/ITKR), [extrantsr](https://github.com/muschellij2/extrantsr/releases/) and [RAVEL](https://github.com/Jfortin1/RAVEL) GitHub pages, respectively. 
+For `ANTsR`, `ITKR`, `extrantsr` and `RAVEL`, it is recommended to install the latest stable versionS available at the [ANTsR](https://github.com/stnava/ANTsR/releases), [ITKR](https://github.com/stnava/ITKR), [extrantsr](https://github.com/muschellij2/extrantsr/releases/) and [RAVEL](https://github.com/Jfortin1/RAVEL) GitHub pages, respectively. 
 For the template space, the MNI152 atlas with an isomorphic voxel size of 1mm is used. It is included in the `MNITemplate` package, available on GitHub at <https://github.com/Jfortin1/MNITemplate>. 
 
 You can also install all the stable and compatible versions of the packages directly from [this](https://github.com/DavidPayares/drat) repository (Recommended).
@@ -132,7 +132,7 @@ The `orthographic` function from the `oro.nifti` package can be used to visualiz
 
 </p>
 
-Reproducible script and sample data can be found in the [example folder](https://github.com/DavidPayares/neuronorm/tree/main/example) or the documentation of `NeuroNorm'available on [CRAN](https://cran.r-project.org/web/packages/neuronorm/neuronorm.pdf).
+Reproducible script and sample data can be found in the [example folder](https://github.com/DavidPayares/neuronorm/tree/main/example) or the documentation of `NeuroNorm'available on [CRAN](https://CRAN.R-project.org/package=neuronorm/neuronorm.pdf).
 
 ## References
 
@@ -143,4 +143,4 @@ Reproducible script and sample data can be found in the [example folder](https:/
 | SyN     | Spatial Registration |  B. B. Avants, C. L. Epstein, M Grossman, J. C. Gee **Symmetric diffeomorphic image registration with cross-correlation: evaluating automated labeling of elderly and neurodegenerative brain**. Medical Image Analysis, 12:1310–1320, 2008.| [Link](https://www.sciencedirect.com/science/article/pii/S1361841507000606?via%3Dihub) |
 | MNI152     | Population atlas | Evans, A.C., Fox, P.T., Lancaster, J., Zilles, K., Woods, R., Paus, T., Simpson, G., Pike, B., Holmes, C., Collins, D.L., Thompson, P., MacDonald, D., Iacoboni, et al. **A probabilistic atlas and reference system for the human brain: International Consortium for Brain Mapping (ICBM)**. Philos. Trans. R. Soc. London B Biol, 356:1293-1322, 2001.| [Link](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1088516/) |
 | HMRF     | Spatially Informed Brain Segmentation | Yongyue Zhang, J. Michael Brady, Stephen Smith **Hidden Markov random field model for segmentation of brain MR image**. Medical Imaging 2000: Image Processing, 2000.| [Link](https://www.spiedigitallibrary.org/conference-proceedings-of-spie/3979/1/Hidden-Markov-random-field-model-for-segmentation-of--brain/10.1117/12.387617.short) |
-| RAVEL       | Intensity Normalization |Jean-Philippe Fortin, Elizabeth M Sweeney, John Muschelli, Ciprian M Crainiceanu, Russell T Shinohara, Alzheimer's Disease Neuroimaging Initiative, et al. **Removing inter-subject technical variability in magnetic resonance imaging studies**. NeuroImage, 132:198–212, 2016.                                                                                                                        | [Link](http://www.sciencedirect.com/science/article/pii/S1053811916001452) |
+| RAVEL       | Intensity Normalization |Jean-Philippe Fortin, Elizabeth M Sweeney, John Muschelli, Ciprian M Crainiceanu, Russell T Shinohara, Alzheimer's Disease Neuroimaging Initiative, et al. **Removing inter-subject technical variability in magnetic resonance imaging studies**. NeuroImage, 132:198–212, 2016.                                                                                                                        | [Link](https://www.sciencedirect.com/science/article/pii/S1053811916001452) |
