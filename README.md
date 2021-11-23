@@ -2,7 +2,7 @@
 # NeuroNorm <img src="img/neuro_sticker.png" align="right" width="160" /> 
 
 [![R-CMD-check](https://github.com/DavidPayares/neuronorm/workflows/R-CMD-check/badge.svg)](https://github.com/DavidPayares/neuronorm/actions)
-[![Build Status](https://travis-ci.com/DavidPayares/neuronorm.svg?branch=main)](https://www.travis-ci.com/DavidPayares/neuronorm)
+[![Build Status](https://travis-ci.com/DavidPayares/neuronorm.svg?branch=main)](https://app.travis-ci.com/github/DavidPayares/neuronorm)
 [![](https://www.r-pkg.org/badges/version/neuronorm?color=blue)](https://cran.r-project.org/package=neuronorm)
 
 
@@ -45,7 +45,7 @@ devtools::install_github("DavidPayares/neuronorm@main")
 `NeuroNorm` relies on many neuroimaging packages: `fslr`, `ANTsr`, `ITKR`, `extrantsr`, `MNITemplate` and `RAVEL`.
 The package `fslr` is available on CRAN, and requires FSL to be installed on
 your machine; see the [FSL website](http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/) for installation. 
-For `ANTsR`, `ITKR`, `extrantsr` and `RAVEL`, it is recommended to install the latest stable versionS available at the [ANTsR](https://github.com/stnava/ANTsR/releases), [ITKR](https://github.com/stnava/ITKR), [extrantsr](https://github.com/muschellij2/extrantsr/releases/) and [RAVEL](https://github.com/Jfortin1/RAVEL) GitHub pages, respectively. 
+For `ANTsR`, `ITKR`, `extrantsr` and `RAVEL`, it is recommended to install the latest stable versionS available at the [ANTsR](https://github.com/ANTsX/ANTsR/releases), [ITKR](https://github.com/stnava/ITKR), [extrantsr](https://github.com/muschellij2/extrantsr/releases/) and [RAVEL](https://github.com/Jfortin1/RAVEL) GitHub pages, respectively. 
 For the template space, the MNI152 atlas with an isomorphic voxel size of 1mm is used. It is included in the `MNITemplate` package, available on GitHub at <https://github.com/Jfortin1/MNITemplate>. 
 
 You can also install all the stable and compatible versions of the packages directly from [this](https://github.com/DavidPayares/drat) repository (Recommended).
