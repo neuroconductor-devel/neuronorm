@@ -29,7 +29,7 @@ paths_preprocess_patients$patient02$ravel
 
 require('oro.nifti')
 # visualize a preprocessed MRI scan for a patient.
-img <- readNIfTI(file.path(paths_preprocess_patients$patient02$registered[1]))
+img <- readNIfTI(file.path(paths_preprocess_patients$patient02$ravel[1]))
 orthographic(img, reorient = F)
 
 ## -------------------- Preprocessing for one patient -----------------------------------
@@ -66,10 +66,11 @@ output_files <- lapply(patients, function(x) {file.path(folder, paste0("patient0
 ## Getting the files of the preprocessed images (without intensity normalization)
 ## and the CSF masks computed by the preprocessing.
 csf_paths <- lapply(paths_preprocess_patients[patients], function(x){x$csf_mask})
-masked_paths <- lapply(paths_preprocess_patients[patients], function(x){x$syn_masked[2]})
+masked_paths <- lapply(paths_preprocess_patients[patients], function(x){x$stripped})
 
 ## Subseting covariares info
 cov_pat <- clinical_info[clinical_info$patient %in% patients,]
 
 ## Normalizing T2 sequences with RAVEL
 image_normalization_ravel(masked.paths = masked_paths, csf.paths = csf_paths, ravel.paths = output_files, demographics = cov_pat, brain.mask = atlas_mask, patients.folder = folder, modality = "T2")
+
