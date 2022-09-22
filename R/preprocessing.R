@@ -72,7 +72,7 @@ preprocess_modality_t1 <- function(mri.patient, folder.patient, atlas, mask, inh
   # Brain Mask
   message('*********************************************\n*************** Brain Mask ******************\n*********************************************\n--Running...\n')
   mask_file <- file.path(folder.patient, 'T1_masked_SyN')
-  mask_mri = neurobase::mask_img(syn_file, mask)
+  mask_mri = fslr::fslmask(syn_file, mask, verbose = FALSE)
   oro.nifti::writeNIfTI(mask_mri, mask_file)
   mri_paths[['striped']] <- paste0(mask_file,'.nii.gz')
   message('--Complete.\n')
@@ -195,7 +195,7 @@ preprocess_modalities <- function(mri.patient, folder.patient, modalities, atlas
   # Brain Mask
   message('*********************************************\n*************** Brain Mask ******************\n*********************************************\n--Running...\n')
   mask_files <- lapply(modalities, function(x) file.path(folder.patient, paste0( x, '_masked')))
-  mask_mri <- lapply(syn_files, neurobase::mask_img, mask)
+  mask_mri <- lapply(syn_files, fslr::fslmask, mask, verbose = FALSE)
   mapply( oro.nifti::writeNIfTI, nim = mask_mri, filename = mask_files)
   mri_paths[['stripped']] <- paste0(mask_files,'.nii.gz')
   message('--Complete.\n')

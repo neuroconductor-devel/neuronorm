@@ -1,6 +1,6 @@
 Package: neuronorm
 Title: Preprocessing of Structural MRI for Multiple Neurodegenerative Diseases
-Version: 1.0.1
+Version: 1.0.2
 Authors@R: c(person(given = "David", family = "Payares", email = "davidpayaresg@gmail.com", role = c("aut", "cre")), 
             person(given = "Jorge", family = "Mateu", email = "mateu@mat.uji.es", role = "ctb"),
             person(given = "Wiebke",family = "Schick",email = "schickw@uni-muenster.com", role = "ctb"),
@@ -26,7 +26,6 @@ Imports:
     knitr,
     oro.nifti,
     fslr,
-    neurobase,
     stats
 Suggests:
     rmarkdown,
