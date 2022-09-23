@@ -120,9 +120,7 @@ orthographic(img)
 The `orthographic` function from the `oro.nifti` package can be used to visualize the image. The image corresponds to a fully preprocessed MRI scan ready to use in further analysis.
 
 <p align="center">
-
 <img src="img/preprocessing_neuronorm.jpg" width="600"/>
-
 </p>
 
 Reproducible script and sample data can be found in the [example folder](https://github.com/DavidPayares/neuronorm/tree/main/example) or the documentation of `NeuroNorm'available on [CRAN](https://CRAN.R-project.org/package=neuronorm/neuronorm.pdf).
