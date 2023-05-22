@@ -28,8 +28,8 @@ The methods and algorithms selected of `NeuroNorm` are state-of-the-art methods 
 
 ## Installation
 
-`Neuronorm` is no longer available on [CRAN!](https://CRAN.R-project.org/package=neuronorm).
-You can install it from GitHub using `devtools`.
+`Neuronorm` is available on [CRAN!](https://CRAN.R-project.org/package=neuronorm).
+You can also install it from GitHub using `devtools`.
 
 ``` r
 # install.packages("devtools")
@@ -40,7 +40,31 @@ devtools::install_github("DavidPayares/neuronorm@main")
 The package `fslr` is available on CRAN, and requires FSL to be installed on
 your machine; see the [FSL website](http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/) for installation. 
 For `ANTsR`, `ITKR`, `extrantsr` and `RAVEL`, it is recommended to install the latest stable versionS available at the [ANTsR](https://github.com/ANTsX/ANTsR/releases), [ITKR](https://github.com/stnava/ITKR), [extrantsr](https://github.com/muschellij2/extrantsr/releases/) and [RAVEL](https://github.com/Jfortin1/RAVEL) GitHub pages, respectively. 
-For the template space, the MNI152 atlas with an isomorphic voxel size of 1mm is used. It is included in the `MNITemplate` package, available on GitHub at <https://github.com/Jfortin1/MNITemplate>. 
+For the template space, the MNI152 atlas with an isomorphic voxel size of 1mm is used. It is included in the `MNITemplate` package, available on GitHub at <https://github.com/Jfortin1/MNITemplate>. Here is an example to install every `Neuronorm`'s dependency. 
+
+``` r
+library(devtools)
+
+# Install ITKR
+devtools::install_github('stnava/ITKR')
+# Install ANTsCore
+devtools::install_github('stnava/ANTsRCore')
+# Install ANTsR (Download the ANTsR binary from its Github Repository)
+ANTsR.url = 'YourPath/ANTsR_0.5.7.4.tar.gz'
+install.packages(ANTsR.url, repos = NULL)
+# Install extransr
+devtools::install_github('muschellij2/extrantsr')
+# Install RAVEL
+devtools::install_github('jfortin1/RAVEL')
+# Install MNITemplate
+devtools::install_github('jfortin1/MNITemplate')
+# Install FSLR
+devtools::install_github('muschellij2/fslr')
+# Install Neurodata
+devtools::install_github('DavidPayares/neurodata')
+# Install Neurornorm
+devtools::install_github('DavidPayares/neuronorm')
+```
 
 You can also install all the stable and compatible versions of the packages directly from [this](https://github.com/DavidPayares/drat) repository (Recommended).
 
