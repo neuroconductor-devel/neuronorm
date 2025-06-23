@@ -1,6 +1,6 @@
 Package: neuronorm
 Title: Preprocessing of Structural MRI for Multiple Neurodegenerative Diseases
-Version: 1.0.2
+Version: 1.0.3
 Authors@R: c(person(given = "David", family = "Payares", email = "davidpayaresg@gmail.com", role = c("aut", "cre")), 
             person(given = "Jorge", family = "Mateu", email = "mateu@mat.uji.es", role = "ctb"),
             person(given = "Wiebke",family = "Schick",email = "schickw@uni-muenster.com", role = "ctb"),
@@ -43,6 +43,7 @@ License: GPL-2
 Encoding: UTF-8
 SystemRequirements: cmake, FSL
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.3.2
 VignetteBuilder: knitr
 OS_type: unix
+Remotes: DavidPayares/neurodata
