@@ -1,44 +1,46 @@
 Package: neuronorm
-Title: Preprocessing of Structural MRI for Multiple Neurodegenerative Diseases
+Title: Preprocessing of Structural MRI for Multiple Neurodegenerative
+        Diseases
 Version: 1.0.3
-Authors@R: c(person(given = "David", family = "Payares", email = "davidpayaresg@gmail.com", role = c("aut", "cre")), 
-            person(given = "Jorge", family = "Mateu", email = "mateu@mat.uji.es", role = "ctb"),
-            person(given = "Wiebke",family = "Schick",email = "schickw@uni-muenster.com", role = "ctb"),
-            person(c("Nicholas J."), "Tustison", role = "cph", email = "NA"),
-            person(c("Brian B"), "Avants", role = "cph", email = "NA"),
-            person(c("Philip A."), "Cook", role = "cph", email = "NA"),
-            person(c("Yuanjie"), "Zheng", role = "cph", email = "NA"),
-            person(c("Alexander"), "Egan", role = "cph", email = "NA"),
-            person(c("Paul A."), "Yushkevich", role = "cph", email = "NA"),
-            person(c("James C."), "Gee", role = "cph", email = "NA"),
-            person(c("M."), "Grossman", role = "cph", email = "NA"),
-            person(c("Jean-Philippe"), "Fortin", role = "cph", email = "NA"),
-            person(c("Elizabeth M."), "Sweeney", role = "cph", email = "NA"),
-            person(c("John"), "Muschelli", role = "cph", email = "NA"),
-            person(c("Ciprian M."), "Crainiceanu", role = "cph", email = "NA"),
-            person(c("Russell T."), "Shinohara", role = "cph", email = "NA"),
-            person(c("Yongyue "), "Zhang", role = "cph", email = "NA"),
-            person(c("J. Michae"), "Brady", role = "cph", email = "NA"),
-            person(c("Stephen"), "Smith", role = "cph", email = "NA")
-           )
+Authors@R: c(person(given = "David", family = "Payares", email =
+        "davidpayaresg@gmail.com", role = c("aut", "cre")),
+        person(given = "Jorge", family = "Mateu", email =
+        "mateu@mat.uji.es", role = "ctb"), person(given =
+        "Wiebke",family = "Schick",email = "schickw@uni-muenster.com",
+        role = "ctb"), person(c("Nicholas J."), "Tustison", role =
+        "cph", email = "NA"), person(c("Brian B"), "Avants", role =
+        "cph", email = "NA"), person(c("Philip A."), "Cook", role =
+        "cph", email = "NA"), person(c("Yuanjie"), "Zheng", role =
+        "cph", email = "NA"), person(c("Alexander"), "Egan", role =
+        "cph", email = "NA"), person(c("Paul A."), "Yushkevich", role =
+        "cph", email = "NA"), person(c("James C."), "Gee", role =
+        "cph", email = "NA"), person(c("M."), "Grossman", role = "cph",
+        email = "NA"), person(c("Jean-Philippe"), "Fortin", role =
+        "cph", email = "NA"), person(c("Elizabeth M."), "Sweeney", role
+        = "cph", email = "NA"), person(c("John"), "Muschelli", role =
+        "cph", email = "NA"), person(c("Ciprian M."), "Crainiceanu",
+        role = "cph", email = "NA"), person(c("Russell T."),
+        "Shinohara", role = "cph", email = "NA"), person(c("Yongyue "),
+        "Zhang", role = "cph", email = "NA"), person(c("J. Michae"),
+        "Brady", role = "cph", email = "NA"), person(c("Stephen"),
+        "Smith", role = "cph", email = "NA") )
 Maintainer: David Payares <davidpayaresg@gmail.com>
-Imports:
-    knitr,
-    oro.nifti,
-    fslr,
-    stats
-Suggests:
+Imports: knitr, oro.nifti, fslr, stats
+Suggests: 
     rmarkdown,
     ANTsR,
     ITKR,
     extrantsr,
     MNITemplate,
     RAVEL,
-    neurodata
-Depends:
-    R (>= 3.5)
+    neurodata,
+    covr,
+    testthat
+Depends: R (>= 3.5)
 Additional_repositories: https://davidpayares.github.io/drat
-Description: Preprocessing pipeline for normalizing and cleaning T1-weighted, T2-weighted and FLAIR MRI images coming from different sources, diseases, patients, scanners and sites.
+Description: Preprocessing pipeline for normalizing and cleaning
+        T1-weighted, T2-weighted and FLAIR MRI images coming from
+        different sources, diseases, patients, scanners and sites.
 License: GPL-2
 Encoding: UTF-8
 SystemRequirements: cmake, FSL
@@ -46,4 +48,14 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 VignetteBuilder: knitr
 OS_type: unix
-Remotes: DavidPayares/neurodata
+Repository: Neuroconductor-Devel
+Remotes:  
+    DavidPayares/neurodata,
+    neuroconductor-devel/ITKR@77717f59775b7103de9f0d35265111886d990b95,
+    neuroconductor-devel/oro.nifti@517ce5312094bf1ecee49bd09024769d3e5d2daa,
+    neuroconductor-devel/ANTsR@85802eaea97beee48ef757be5ce64028f5bbe965,
+    neuroconductor-devel/MNITemplate@b9958a6c5c98a303ff126033a6451a761f35e4f3,
+    neuroconductor-devel/fslr@22c50545a095a3a02deec976b23fa6a349e717ac,
+    neuroconductor-devel/RAVEL@b4684c9789e7a60e5f3e542a9aef015ff5402428,
+    neuroconductor-devel/extrantsr@25077d6f04d8e3739c63020d8342b5eff11bccca
+biocViews: 
